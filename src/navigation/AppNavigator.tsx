@@ -9,17 +9,17 @@ import { StyleSheet } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-
+import baseStyles from "../../styles"
 
 
 const Tab = createBottomTabNavigator();
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#ff0000',
+    ...baseStyles.bgColor,
   },
   tabHeaderText: {
-    color: '#fff',
+    ...baseStyles.textColor,
     fontWeight: 'bold',
     fontSize: 20,
   },
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   headerText: {
-    color: '#fff',
+    ...baseStyles.textColor,
     fontWeight: 'bold',
     fontSize: 25,
     marginTop: 16
@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
 const commonScreenOptions = {
   headerShown: false,
   headerTitleStyle: styles.tabHeaderText,
-  tabBarActiveBackgroundColor: 'red',
-  tabBarActiveTintColor: 'white',
-  tabBarInactiveBackgroundColor: 'red',
-  tabBarInactiveTintColor: 'white',
+  tabBarActiveBackgroundColor: baseStyles.bgColor.backgroundColor,
+  tabBarActiveTintColor: baseStyles.textColor.color,
+  tabBarInactiveBackgroundColor: baseStyles.bgColor.backgroundColor,
+  tabBarInactiveTintColor: baseStyles.textColor.color,
   tabBarLabelStyle: {
     fontSize: 12,
-    color: "white"
+    color: baseStyles.textColor.color,
   }
 };
 const HeaderTitle = () => (
