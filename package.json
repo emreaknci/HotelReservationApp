@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "android-dev": "adb reverse tcp:8080 tcp:8080 && react-native run- android"
   },
   "dependencies": {
     "@react-navigation/bottom-tabs": "^6.5.11",
@@ -15,11 +16,13 @@
     "@react-navigation/stack": "^6.3.20",
     "@types/react": "^18.2.39",
     "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
     "expo": "~49.0.15",
     "expo-status-bar": "~1.6.0",
     "formik": "^2.4.5",
     "react": "18.2.0",
     "react-native": "0.72.6",
+    "react-native-dotenv": "^3.4.9",
     "react-native-toast-notifications": "^3.4.0",
     "react-native-vector-icons": "^10.0.2",
     "typescript": "^5.1.3",

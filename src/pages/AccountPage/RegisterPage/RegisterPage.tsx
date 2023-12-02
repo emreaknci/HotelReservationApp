@@ -1,18 +1,20 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import RegisterDto from '../../../types/users/registerDto';
 import styles from './RegisterPage.style';
-import CustomTextInput from '../../../components/TextInput/CustomTextInput';
+import CustomTextInput from '../../../components/CustomTextInput/CustomTextInput';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
+import CustomButton from '../../../components/CustomButton';
+import authService from '../../../services/authService';
+import RegisterDto from '../../../types/users/registerDto';
+import { useToast } from 'react-native-toast-notifications';
 
 const renderInput = (formik: any) => {
     const keys = Object.keys(formik.values);
 
     return keys.map((key) => (
-        <View key={key}>
+        <View key={key} >
             <CustomTextInput
                 fieldName={key}
                 handleOnChange={formik.handleChange}
@@ -22,8 +24,7 @@ const renderInput = (formik: any) => {
             {formik.touched[key] && formik.errors[key] ? (
                 <Text style={styles.errorText}>
                     <MaterialCommunityIcons name={"alert-circle-outline"}
-                        color={styles.errorText.color} size={styles.errorText.fontSize} />
-                    {formik.errors[key]}
+                        color={styles.errorText.color} size={styles.errorText.fontSize} /> {formik.errors[key]}
                 </Text>
             ) : null}
         </View>
@@ -32,6 +33,7 @@ const renderInput = (formik: any) => {
 };
 
 const RegisterPage = () => {
+    const toast = useToast();
 
     const formik = useFormik({
         initialValues: {
@@ -46,22 +48,33 @@ const RegisterPage = () => {
             email: Yup.string().email('Invalid email address').required('Email is required'),
             password: Yup.string().required('Password is required'),
         }),
-        validateOnChange: false,
-        onSubmit: (values: RegisterDto) => {
-
-            console.log(values);
+        onSubmit: async (values: RegisterDto) => {
+            const res = await authService.registerForCustomer(values);
+            if (!res.success) {
+                toast.show(res.message, {
+                    type: 'danger', placement: 'center',
+                    dangerColor: 'red',
+                    icon: <MaterialCommunityIcons name={"alert-circle-outline"} color={"white"} size={30} />,
+                    animationType: 'zoom-in',
+                });
+            }
+            else {
+                toast.show(res.message, {
+                    type: 'success', placement: 'center',
+                    successColor: 'green',
+                    icon: <MaterialCommunityIcons name={"check-circle-outline"} color={"white"} size={30} />,
+                    animationType: 'zoom-in',
+                });
+            }
         },
     });
 
-
-
     return (
         <View style={styles.container}>
-            <Text>Kayıt Ol</Text>
+            <Text style={styles.header}>Kayıt Ol</Text>
             {renderInput(formik)}
-            <Button title="Register" onPress={() => formik.handleSubmit()} />
+            <CustomButton title="Register" onPress={() => formik.handleSubmit()} color='red' />
         </View>
     );
 };
-
 export default RegisterPage;
