@@ -5,13 +5,8 @@ import BaseService from './baseService';
 
 
 const AuthService = {
-    registerForCustomer: async (dto: RegisterDto): Promise<Result<AppUser>> => {
-        try {
-            const response: Result<AppUser> = await BaseService.axiosInstance.post(`${process.env.EXPO_PUBLIC_API_URL}/api/auth/customer-register`, dto);
-            return BaseService.handleResponse(response);
-        } catch (error: any) {
-            return BaseService.handleErrorResponse(error);
-        }
+    registerForCustomer: async (dto: RegisterDto): Promise<any> => {
+        return await BaseService.post('/auth/customer-register', dto);
     },
 };
 

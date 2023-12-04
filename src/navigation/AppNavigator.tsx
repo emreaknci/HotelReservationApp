@@ -10,6 +10,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import baseStyles from "../../styles"
+import colors from '../../colors';
 
 
 const Tab = createBottomTabNavigator();
@@ -28,14 +29,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'red',
+    backgroundColor: baseStyles.bgColor.backgroundColor,
     padding: 10,
   },
   headerText: {
     ...baseStyles.textColor,
     fontWeight: 'bold',
     fontSize: 25,
-    marginTop: 16
+    marginTop: 16,
+    color: colors.text,
   },
 });
 const commonScreenOptions = {
