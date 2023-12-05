@@ -17,7 +17,16 @@ const StorageService = {
 
     clearAsync: async () => {
         AsyncStorage.clear();
-    }
+    },
+
+    clearUserInfoAndToken: async () => {
+        await AsyncStorage.removeItem('token');
+        await AsyncStorage.removeItem('userId');
+        await AsyncStorage.removeItem('userEmail');
+        await AsyncStorage.removeItem('userFullName');
+        await AsyncStorage.removeItem('userType');
+        await AsyncStorage.removeItem('tokenExpiration');
+    },
 };
 
 export default StorageService;

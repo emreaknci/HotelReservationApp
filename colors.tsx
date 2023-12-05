@@ -4,7 +4,7 @@ const colors = {
     background: '#f5f5f5',
     text: 'white',
     inputText: 'black',
-    error: 'red',
+    error: '#de2d5f',
 };
 
 

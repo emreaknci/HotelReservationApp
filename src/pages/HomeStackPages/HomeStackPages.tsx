@@ -1,6 +1,6 @@
 
 import { View, Text } from "react-native";
-import styles from "./HomePage.style";
+import styles from "./HomeStackPages.style";
 import { useContext } from "react";
 import { AuthContext } from '../../context/AuthContext';
 const HomePage = () => {
@@ -10,7 +10,6 @@ const HomePage = () => {
       <View style={styles.container}>
         <Text>HomePage</Text>
         <Text>UserName: {authContext.user?.id}</Text>
-
       </View>
     </>
   );

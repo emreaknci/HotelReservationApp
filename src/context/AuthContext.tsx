@@ -36,19 +36,24 @@ export const AuthProvider = ({ children }) => {
   const logOut = async () => {
     setUser(null);
     setIsAuthenticated(false);
-    await StorageService.clearAsync();
+    await StorageService.clearUserInfoAndToken();
   }
 
   useEffect(() => {
     const checkAuthStatus = async () => {
+      const tokenExpiration = await StorageService.getAsync('tokenExpiration');
       const token = await StorageService.getAsync('token');
-      setIsAuthenticated(!!token);
-      if (!!token) {
-        await logIn();
+      if (!tokenExpiration || !token) {
+        await StorageService.clearUserInfoAndToken();
+        setIsAuthenticated(false);
+        return;
       }
-      else {
-        await logOut();
+      if (new Date(tokenExpiration) < new Date()) {
+        await StorageService.clearUserInfoAndToken();
+        setIsAuthenticated(false);
+        return;
       }
+      await logIn();
     };
 
     checkAuthStatus();

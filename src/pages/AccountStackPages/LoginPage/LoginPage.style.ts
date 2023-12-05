@@ -13,8 +13,9 @@ export default StyleSheet.create({
         elevation: 10,
         shadowColor: colors.primary,
         shadowOffset: { width: 10, height: 10 },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.5, 
     },
+    
     title: {
         fontSize: 24,
         fontWeight: 'bold',
@@ -44,6 +45,7 @@ export default StyleSheet.create({
         paddingVertical: 10,
         marginBottom: 10,
         width: Dimensions.get('window').width * 0.8,
+
     },
     inputIcon: {
         marginRight: 10,

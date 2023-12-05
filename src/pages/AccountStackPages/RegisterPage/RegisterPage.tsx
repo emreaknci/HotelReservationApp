@@ -45,7 +45,6 @@ const RegisterPage = ({ navigation }) => {
             .then((res) => {
                 toast.show(res.data.message, {
                     type: "custom_type",
-                    animationDuration: 300,
                     placement: "center",
                     animationType: "zoom-in",
                     data: {
@@ -62,7 +61,6 @@ const RegisterPage = ({ navigation }) => {
             ).catch((err) => {
                 toast.show(err.response.data.message, {
                     type: "custom_type",
-                    animationDuration: 300,
                     placement: "center",
                     animationType: "zoom-in",
                     data: {

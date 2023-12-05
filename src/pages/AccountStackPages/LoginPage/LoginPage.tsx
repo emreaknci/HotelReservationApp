@@ -46,19 +46,13 @@ const LoginPage = ({ navigation }) => {
         StorageService.setAsync("userEmail", res.data.data.email);
         StorageService.setAsync("userFullName", res.data.data.firstName + " " + res.data.data.lastName);
         StorageService.setAsync("userType", res.data.data.userType);
+        StorageService.setAsync("tokenExpiration", res.data.data.expiration);
         await authContext.logIn();
         navigation.navigate('MyAccountPage');
         toast.show(res.data.message, {
           type: "custom_type",
-          animationDuration: 300,
           placement: "center",
           animationType: "zoom-in",
-          data: {
-            color: "green",
-          },
-          style: {
-            borderColor: "green",
-          },
           swipeEnabled: true,
         });
         setLoading(false);
@@ -66,7 +60,6 @@ const LoginPage = ({ navigation }) => {
       ).catch((err) => {
         toast.show(err.response.data.message, {
           type: "custom_type",
-          animationDuration: 300,
           placement: "center",
           animationType: "zoom-in",
           data: {

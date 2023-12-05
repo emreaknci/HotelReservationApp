@@ -1,6 +1,6 @@
 
 import { View, Text } from "react-native";
-import styles from "./ReservationPage.style";
+import styles from "./ReservationStackPages.style";
 
 const ReservationPage = () => {
   return (

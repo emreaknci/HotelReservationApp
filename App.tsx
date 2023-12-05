@@ -13,8 +13,8 @@ export default function App() {
       <ToastProvider renderType={{
         custom_type: (toast) => (
           <View style={[toasterStyles.style, toast.style]}>
-            {toast.data?.title && <Text style={{ fontWeight: 'bold', color: toast.data.color ?? colors.primary }}>{toast.data.title}</Text>}
-            <Text style={{ color: toast.data.color ?? colors.primary, fontWeight: toast.data.title ? "normal" : "bold" }}>{toast.message}</Text>
+            {toast.data?.title && <Text style={{ fontWeight: 'bold', color: toast.data?.color ?? colors.primary }}>{toast.data.title}</Text>}
+            <Text style={{ color: toast.data?.color ?? colors.primary, fontWeight: toast.data?.title ? "normal" : "bold" }}>{toast.message}</Text>
           </View>
         )
       }}>
