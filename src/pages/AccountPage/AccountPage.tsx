@@ -3,11 +3,11 @@ import { View, Text } from "react-native";
 import styles from "./AccountPage.style";
 import RegisterPage from "./RegisterPage";
 
-const AccountPage = () => {
+const AccountPage = ({ navigation }) => {
   return (
     <>
       <View style={styles.container} >
-        <RegisterPage />
+        <RegisterPage navigation={navigation} />
       </View>
     </>
   );

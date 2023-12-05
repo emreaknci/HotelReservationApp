@@ -7,7 +7,7 @@ import AuthService from '../../../services/authService';
 import { useToast } from 'react-native-toast-notifications';
 
 
-const RegisterPage = () => {
+const RegisterPage = ({ navigation }) => {
     const toast = useToast();
 
     const [registerData, setRegisterData] = useState<RegisterDto>({
@@ -109,7 +109,8 @@ const RegisterPage = () => {
     };
 
     const navigateToLoginPage = () => {
-        console.log('Login Page');
+        navigation.navigate('LoginPage');
+
     };
 
     return (

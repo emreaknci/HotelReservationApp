@@ -3,21 +3,25 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AppNavigator from './src/navigation/AppNavigator';
 import { ToastProvider } from 'react-native-toast-notifications';
 import colors from './colors';
-
+import { AuthProvider } from './src/context/AuthContext';
 
 const Tab = createBottomTabNavigator();
 export default function App() {
   return (
-    <ToastProvider renderType={{
-      custom_type: (toast) => (
-        <View style={[toasterStyles.style, toast.style]}>
-          <Text style={{ fontWeight: 'bold', color: toast.data.color ?? colors.primary }}>{toast.data.title}</Text>
-          <Text style={{ color: toast.data.color ?? colors.primary }}>{toast.message}</Text>
-        </View>
-      )
-    }}>
-      <AppNavigator />
-    </ToastProvider >
+
+    <AuthProvider>
+      <ToastProvider renderType={{
+        custom_type: (toast) => (
+          <View style={[toasterStyles.style, toast.style]}>
+            {toast.data?.title && <Text style={{ fontWeight: 'bold', color: toast.data.color ?? colors.primary }}>{toast.data.title}</Text>}
+            <Text style={{ color: toast.data.color ?? colors.primary, fontWeight: toast.data.title ? "normal" : "bold" }}>{toast.message}</Text>
+          </View>
+        )
+      }}>
+        <AppNavigator />
+      </ToastProvider >
+    </AuthProvider>
+
   );
 }
 
