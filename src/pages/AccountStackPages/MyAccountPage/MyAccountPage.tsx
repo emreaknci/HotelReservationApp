@@ -27,7 +27,7 @@ const MyAccountPage = ({ navigation }) => {
       title: 'Hesap Bilgilerini Güncelle',
       icon: 'account-edit',
       subMenus: [
-        { id: '11', title: 'Şifre Değiştir', icon: 'lock', navigatePage: null, onPress: null },
+        { id: '11', title: 'Şifre Değiştir', icon: 'lock', navigatePage: "ChangePasswordPage", onPress: null },
         { id: '12', title: 'Ad ve Soyad Değiştir', icon: 'account-circle', navigatePage: null, onPress: null },
       ],
     },

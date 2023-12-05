@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import Result from 'src/types/result';
+import storageService from './storageService';
 const axiosInstance = axios.create({
     baseURL: `${process.env.EXPO_PUBLIC_API_URL}/api`,
     headers: {
@@ -9,5 +9,21 @@ const axiosInstance = axios.create({
         "Cache-Control": "no-cache"
     }
 });
+
+axiosInstance.interceptors.request.use(
+    async (config) => {
+        const token = await storageService.getAsync("token");
+
+        const bearerToken = token;
+
+        config.headers.Authorization = `Bearer ${bearerToken}`;
+
+        return config;
+    },
+    (error) => {
+        console.log("InterceptorError: ", error)
+        return Promise.reject(error);
+    }
+);
 
 export default axiosInstance;

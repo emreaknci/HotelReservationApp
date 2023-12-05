@@ -16,6 +16,7 @@ import MyAccountPage from '../pages/AccountStackPages/MyAccountPage';
 import { useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import HomeStackPages from '../pages/HomeStackPages';
+import ChangePasswordPage from '../pages/AccountStackPages/ChangePasswordPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,7 +60,18 @@ const AccountStack = () => {
         name={isAuthenticated ? "MyAccountPage" : "LoginPage"}
         component={isAuthenticated ? MyAccountPage : LoginPage} />
       {!isAuthenticated && <Stack.Screen name="RegisterPage" component={RegisterPage} />}
-
+      {isAuthenticated &&
+        <>
+          <Stack.Screen name="ChangePasswordPage" component={ChangePasswordPage} options={
+            {
+              headerShown: true,
+              title: "Şifre değiştir",
+              headerTitleStyle: {
+                color: "black"
+              },
+            }
+          } />
+        </>}
     </Stack.Navigator>
   );
 };

@@ -1,8 +1,6 @@
 import RegisterDto from '../types/users/registerDto';
-import AppUser from '../types/appUser';
 import Result from '../types/result';
 import BaseService from './baseService';
-import AccessToken from 'src/types/accessToken';
 import { AxiosResponse } from 'axios';
 import LoginResponse from 'src/types/loginResponse';
 
