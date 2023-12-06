@@ -9,7 +9,7 @@ const WIDTH = Dimensions.get('window').width * 1;
 const HEIGHT = Dimensions.get('window').height * 0.3;
 
 
-const CarouselComponent = ({ data }: { data?: any }) => {
+const CarouselComponent = ({ data, navigation, navigatePage }: { data?: any, navigation?: any, navigatePage?: any }) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
@@ -59,11 +59,15 @@ const CarouselComponent = ({ data }: { data?: any }) => {
 
   useEffect(() => {
     if (data && data.length > 0) {
-      const interval = setInterval(scrollToNextItem, 3000);
+      const interval = setInterval(scrollToNextItem, 2000);
 
       return () => clearInterval(interval);
     }
   }, [index, data]);
+
+  const navigateToPage = (item: any) => {
+    navigation.navigate(navigatePage, { id: item.id, title: item.title });
+  }
 
   return (
     <View style={{ ...styles.carousel }}>
@@ -76,7 +80,7 @@ const CarouselComponent = ({ data }: { data?: any }) => {
           decelerationRate={0}
         >
           {data.map((item, i) => (
-            <TouchableOpacity activeOpacity={1} key={i} onPress={() => console.log("otel id: ", item.id)}>
+            <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigateToPage(item)}>
               <AnimatedImage
                 source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.image}` }}
                 style={{ width: WIDTH, height: HEIGHT }}
@@ -85,7 +89,7 @@ const CarouselComponent = ({ data }: { data?: any }) => {
           ))}
         </ScrollView>
       ) : (
-        <Text>Yükleniyor...</Text>
+        <></>
       )}
     </View>
   );

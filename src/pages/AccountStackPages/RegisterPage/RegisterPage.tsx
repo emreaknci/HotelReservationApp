@@ -47,15 +47,8 @@ const RegisterPage = ({ navigation }) => {
                     type: "custom_type",
                     placement: "center",
                     animationType: "zoom-in",
-                    data: {
-                        title: "Başarılı!",
-                        color: "green",
-                    },
-                    style: {
-                        borderColor: "green",
-                    },
                     swipeEnabled: true,
-                });
+                  });
                 setLoading(false);
             }
             ).catch((err) => {

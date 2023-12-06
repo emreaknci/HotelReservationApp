@@ -17,24 +17,28 @@ import { useEffect, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import HomeStackPages from '../pages/HomeStackPages';
 import ChangePasswordPage from '../pages/AccountStackPages/ChangePasswordPage';
+import HotelDetailPage from "../pages/HomeStackPages/HotelDetailPage/HotelDetailPage"
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 
-const HeaderTitle = () => (
-  <View style={styles.headerContainer}>
-    <Text style={styles.headerText}>TRIVAGO</Text>
-  </View>
-);
 const HomeStack = () => {
+
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
-      <Stack.Screen
-        name="HomeStackPages"
-        component={HomeStackPages}
-      />
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator screenOptions={{ ...commonScreenOptions, headerShown: false }}>
+        <Stack.Screen name="HomeStackPages" component={HomeStackPages} />
+        <Stack.Screen name="HotelDetailPage" component={HotelDetailPage} options={({ route }) => {
+          const title = route.params && route.params["title"] ? route.params["title"] : "Otel Detayı";
+          return {
+            headerShown: true, title: title, headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+          };
+        }} />
+      </Stack.Navigator>
+    </>
+
   );
 };
 
@@ -44,6 +48,7 @@ const ReservationStack = ({ navigation }) => {
       <Stack.Screen
         name="ReservationStackPages"
         component={ReservationStackPages}
+
       />
     </Stack.Navigator>
   )
@@ -55,24 +60,23 @@ const AccountStack = () => {
   }, [isAuthenticated]);
 
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
-      <Stack.Screen
-        name={isAuthenticated ? "MyAccountPage" : "LoginPage"}
-        component={isAuthenticated ? MyAccountPage : LoginPage} />
-      {!isAuthenticated && <Stack.Screen name="RegisterPage" component={RegisterPage} />}
-      {isAuthenticated &&
-        <>
-          <Stack.Screen name="ChangePasswordPage" component={ChangePasswordPage} options={
-            {
-              headerShown: true,
-              title: "Şifre değiştir",
-              headerTitleStyle: {
-                color: "black"
-              },
-            }
-          } />
-        </>}
-    </Stack.Navigator>
+    <>
+      <Stack.Navigator screenOptions={commonScreenOptions}>
+        <Stack.Screen
+          name={isAuthenticated ? "MyAccountPage" : "LoginPage"}
+          component={isAuthenticated ? MyAccountPage : LoginPage} />
+        {!isAuthenticated && <Stack.Screen name="RegisterPage" component={RegisterPage} />}
+        {isAuthenticated &&
+          <>
+            <Stack.Screen name="ChangePasswordPage" component={ChangePasswordPage} options={
+              {
+                headerShown: true, title: "Şifre değiştir", headerTintColor: colors.text,
+                headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+              }
+            } />
+          </>}
+      </Stack.Navigator>
+    </>
   );
 };
 
@@ -88,13 +92,12 @@ const AdminPanelStack = () => {
 const AppNavigator = () => {
   const authContext = useContext(AuthContext);
   useEffect(() => {
-  }, [authContext.isAuthenticated]);
+  }, []);
 
   return (
     <View style={{ flex: 1 }}>
       <StatusBar style="auto" />
-      <HeaderTitle />
-      <NavigationContainer>
+      <NavigationContainer >
         <Tab.Navigator initialRouteName="HomeStack"
           screenOptions={{ ...commonScreenOptions }}
         >
@@ -103,7 +106,6 @@ const AppNavigator = () => {
             component={HomeStack}
             options={
               {
-                freezeOnBlur: true,
                 tabBarLabel: 'Ana Sayfa',
                 tabBarIcon: ({ color, size, focused }) => (
                   <MaterialCommunityIcons color={color} size={size}
@@ -165,22 +167,6 @@ const styles = StyleSheet.create({
     ...baseStyles.textColor,
     fontWeight: 'bold',
     fontSize: 20,
-  },
-
-  headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: baseStyles.bgColor.backgroundColor,
-    paddingTop: 25,
-    paddingBottom: 10,
-  },
-  headerText: {
-    ...baseStyles.textColor,
-    fontWeight: 'bold',
-    fontSize: 20,
-    marginTop: 8,
-    color: colors.text,
   },
 });
 const commonScreenOptions = {

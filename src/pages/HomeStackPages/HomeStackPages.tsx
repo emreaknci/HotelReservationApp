@@ -1,35 +1,57 @@
 
-import { View, Text } from "react-native";
+import { View, Text, ScrollView, RefreshControl } from "react-native";
 import styles from "./HomeStackPages.style";
-import { AuthContext } from '../../context/AuthContext';
 import hotelService from '../../services/hotelService';
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import CarouselComponent from "../../components/CarouselComponent/CarouselComponent";
-const HomePage = () => {
-  const authContext = useContext(AuthContext);
-  const [hotels, setHotels] = useState(null);
+import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
+const HomePage = ({ navigation }) => {
+
   const [carouselItems, setCarouselItems] = useState(null);
-  useEffect(() => {
+  const [refreshing, setRefreshing] = useState(false);
+
+  const getHotelWithImages = () => {
     hotelService.getAllWithImages()
       .then((res) => {
-        setHotels(res.data.data);
         const carouselItems = res.data.data.map((item) => {
           return {
             id: item.id,
-            image: item.images[0]
+            image: item.images[0],
+            title: item.name,
           }
         })
         setCarouselItems(carouselItems);
+      }).catch((err) => {
+        console.log(err);
       })
+
+  }
+
+  useEffect(() => {
+    getHotelWithImages()
   }, [])
 
+  const onRefresh = () => {
+    setRefreshing(true);
+    getHotelWithImages();
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  };
+
+
   return (
+
     <>
-      <View style={{ ...styles.container }}>
-        {/* <Text>HomePage</Text>
-        <Text>UserName: {authContext.user?.id}</Text> */}
-        <CarouselComponent data={carouselItems} />
-      </View>
+      <HeaderComponent />
+      <ScrollView refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
+        <View style={{ ...styles.container }}>
+          <CarouselComponent data={carouselItems} navigation={navigation} navigatePage={"HotelDetailPage"} />
+        </View>
+      </ScrollView>
     </>
   );
 }
