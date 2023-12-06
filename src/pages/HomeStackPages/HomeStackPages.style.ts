@@ -2,8 +2,8 @@
 import { StyleSheet } from 'react-native';
 import mainStyles from "../../../styles"
 export default StyleSheet.create({
-    container:{
+    container: {
         ...mainStyles.container,
+        padding: 0
     }
 });
-  

@@ -1,9 +1,10 @@
 import AppUser from "../appUser";
 import BaseEntity from "../baseEntity";
 import Hotel from "../hotels/hotel";
+import Payment from "../payments/payment";
 import Room from "../rooms/room";
 
-interface Reservation extends BaseEntity {
+export default interface Reservation extends BaseEntity {
     checkInDate?: Date | null;
     checkOutDate?: Date | null;
     hotelId: number;
