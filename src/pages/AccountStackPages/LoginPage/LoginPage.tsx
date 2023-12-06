@@ -8,6 +8,7 @@ import { useToast } from 'react-native-toast-notifications';
 import LoginDto from 'src/types/users/loginDto';
 import StorageService from '../../../services/storageService';
 import { AuthContext } from '../../../context/AuthContext';
+import HeaderComponent from './../../../components/HeaderComponent/HeaderComponent';
 
 const LoginPage = ({ navigation }) => {
   const toast = useToast();
@@ -100,6 +101,7 @@ const LoginPage = ({ navigation }) => {
 
   return (
     <>
+      <HeaderComponent />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
           {!loading ?

@@ -19,4 +19,9 @@ export default StyleSheet.create({
         marginTop: 8,
         color: colors.text,
     },
+    headerImage: {
+        width: 50,
+        height: 50,
+        marginTop: 10,
+    },
 });

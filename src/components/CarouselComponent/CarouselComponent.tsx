@@ -8,8 +8,20 @@ const AnimatedImage = Animated.createAnimatedComponent(Image);
 const WIDTH = Dimensions.get('window').width * 1;
 const HEIGHT = Dimensions.get('window').height * 0.3;
 
+export interface CarouselItem {
+  id?: number;
+  title?: string;
+  image: string;
+}
 
-const CarouselComponent = ({ data, navigation, navigatePage }: { data?: any, navigation?: any, navigatePage?: any }) => {
+export interface CarouselComponentProps {
+  data?: CarouselItem[];
+  navigation?: any;
+  navigatePage?: any;
+}
+
+
+const CarouselComponent = ({ data, navigation, navigatePage }: CarouselComponentProps) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const scrollViewRef = useRef<ScrollView>(null);
@@ -66,7 +78,8 @@ const CarouselComponent = ({ data, navigation, navigatePage }: { data?: any, nav
   }, [index, data]);
 
   const navigateToPage = (item: any) => {
-    navigation.navigate(navigatePage, { id: item.id, title: item.title });
+    if (navigatePage && item.id)
+      navigation.navigate(navigatePage, { id: item.id, title: item.title });
   }
 
   return (

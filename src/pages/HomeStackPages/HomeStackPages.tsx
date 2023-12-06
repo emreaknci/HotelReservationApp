@@ -45,8 +45,8 @@ const HomePage = ({ navigation }) => {
 
     <>
       <HeaderComponent />
-      <ScrollView refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      <ScrollView  showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}  />
       }>
         <View style={{ ...styles.container }}>
           <CarouselComponent data={carouselItems} navigation={navigation} navigatePage={"HotelDetailPage"} />

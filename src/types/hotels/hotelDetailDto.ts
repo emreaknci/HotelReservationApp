@@ -1,5 +1,5 @@
-import Room from "../rooms/room";
 import Reservation from "../reservations/reservation";
+import RoomDetailDto from "../rooms/roomDetailDto";
 
 
 export default interface HotelDetailDto {
@@ -19,6 +19,6 @@ export default interface HotelDetailDto {
     star?: number | null;
     totalRoomCount?: number | null;
     images: string[];
-    rooms?: Room[] | null;
+    rooms?: RoomDetailDto[] | null;
     reservations?: Reservation[] | null;
   }

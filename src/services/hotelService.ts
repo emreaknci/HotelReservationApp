@@ -5,8 +5,12 @@ import BaseService from './baseService';
 
 
 const HotelService = {
-    getAllWithImages:  (): Promise<AxiosResponse<Result<HotelDetailDto[]>>> => {
+    getAllWithImages: (): Promise<AxiosResponse<Result<HotelDetailDto[]>>> => {
         return BaseService.get('/hotel/get-all-with-images');
+    },
+
+    getByIdWithImages: (id: number): Promise<AxiosResponse<Result<HotelDetailDto>>> => {
+        return BaseService.get(`/hotel/get-by-id-with-images/${id}`);
     }
 }
 
