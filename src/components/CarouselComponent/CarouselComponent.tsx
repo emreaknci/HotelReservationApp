@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from "react";
-import { View, Image, TouchableOpacity, Text, Animated, ScrollView, Dimensions, NativeSyntheticEvent, NativeScrollEvent } from "react-native";
+import { View, Image, TouchableOpacity, Text, Animated, FlatList, Dimensions } from "react-native";
 import { useRef } from 'react';
 import styles from "./CarouselComponent.style";
 
@@ -18,63 +17,23 @@ export interface CarouselComponentProps {
   data?: CarouselItem[];
   navigation?: any;
   navigatePage?: any;
-}
 
+}
 
 const CarouselComponent = ({ data, navigation, navigatePage }: CarouselComponentProps) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const scrollViewRef = useRef<ScrollView>(null);
 
   useEffect(() => {
-    const scrollAnimation = Animated.timing(scrollX, {
-      toValue: 1,
-      duration: 5000,
-      useNativeDriver: true,
-    });
-    const resetScrollAnimation = Animated.timing(scrollX, {
-      toValue: 0,
-      duration: 0,
-      useNativeDriver: true,
-    });
-    const sequenceAnimation = Animated.sequence([scrollAnimation, resetScrollAnimation]);
-    const loopAnimation: Animated.CompositeAnimation = Animated.loop(sequenceAnimation, { iterations: -1 });
-    loopAnimation.start();
-    return () => {
-      loopAnimation.stop();
+    const animateScroll = () => {
+      const nextIndex = (index + 1) % data.length;
+      setIndex(nextIndex);
+      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
     };
-  }, [scrollX]);
 
-  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-    const { x } = event.nativeEvent.contentOffset;
-    const newIndex = Math.round(x / WIDTH);
-    if (index !== newIndex) {
-      setIndex(newIndex);
-    }
-  };
+    const interval = setInterval(animateScroll, 2000);
 
-  const handlePress = (index: number) => {
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({
-        animated: true,
-        x: index * WIDTH,
-      });
-    }
-  };
-
-  const scrollToNextItem = () => {
-    if (data) {
-      const newIndex = (index + 1) % data.length;
-      handlePress(newIndex);
-    }
-  };
-
-  useEffect(() => {
-    if (data && data.length > 0) {
-      const interval = setInterval(scrollToNextItem, 2000);
-
-      return () => clearInterval(interval);
-    }
+    return () => clearInterval(interval);
   }, [index, data]);
 
   const navigateToPage = (item: any) => {
@@ -82,25 +41,37 @@ const CarouselComponent = ({ data, navigation, navigatePage }: CarouselComponent
       navigation.navigate(navigatePage, { id: item.id, title: item.title });
   }
 
+  const flatListRef = useRef<FlatList>(null);
+
   return (
     <View style={{ ...styles.carousel }}>
       {data ? (
-        <ScrollView
-          ref={scrollViewRef}
+        <FlatList
+          ref={flatListRef}
+          data={data}
+          keyExtractor={(item) => item.image}
           horizontal
           showsHorizontalScrollIndicator={false}
-          onScroll={handleScroll}
           decelerationRate={0}
-        >
-          {data.map((item, i) => (
-            <TouchableOpacity activeOpacity={1} key={i} onPress={() => navigateToPage(item)}>
+          initialScrollIndex={index}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
+          }}
+          onMomentumScrollEnd={(event) => {
+            const newIndex = Math.floor(event.nativeEvent.contentOffset.x / WIDTH);
+            if (index !== newIndex) {
+              setIndex(newIndex);
+            }
+          }}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity activeOpacity={1} key={index} onPress={() => navigateToPage(item)}>
               <AnimatedImage
                 source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.image}` }}
                 style={{ width: WIDTH, height: HEIGHT }}
               />
             </TouchableOpacity>
-          ))}
-        </ScrollView>
+          )}
+        />
       ) : (
         <></>
       )}

@@ -18,6 +18,7 @@ import { AuthContext } from '../context/AuthContext';
 import HomeStackPages from '../pages/HomeStackPages';
 import ChangePasswordPage from '../pages/AccountStackPages/ChangePasswordPage';
 import HotelDetailPage from "../pages/HomeStackPages/HotelDetailPage/HotelDetailPage"
+import RoomDetailPage from '..//pages/HomeStackPages/HotelDetailPage/RoomDetailPage/RoomDetailPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -31,6 +32,13 @@ const HomeStack = () => {
         <Stack.Screen name="HomeStackPages" component={HomeStackPages} />
         <Stack.Screen name="HotelDetailPage" component={HotelDetailPage} options={({ route }) => {
           const title = route.params && route.params["title"] ? route.params["title"] : "Otel Detayı";
+          return {
+            headerShown: true, title: title, headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+          };
+        }} />
+        <Stack.Screen name="RoomDetailPage" component={RoomDetailPage} options={({ route }) => {
+          const title = route.params && route.params["title"] ? route.params["title"] : "Oda Detayı";
           return {
             headerShown: true, title: title, headerTintColor: colors.text,
             headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"

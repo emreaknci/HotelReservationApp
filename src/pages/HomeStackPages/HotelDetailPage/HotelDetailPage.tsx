@@ -1,12 +1,11 @@
 
-import { View, Text, Button, TouchableOpacity, ScrollView, RefreshControl, FlatList, Image } from "react-native";
+import { View, Text, TouchableOpacity, RefreshControl, FlatList, Image } from "react-native";
 import styles from "./HotelDetailPage.style";
 import HotelService from './../../../services/hotelService';
 import { useEffect, useState } from "react";
 import HotelDetailDto from './../../../types/hotels/hotelDetailDto';
 import CarouselComponent, { CarouselItem } from './../../../components/CarouselComponent/CarouselComponent';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import colors from "../../../../colors";
 import RoomDetailDto from '../../../types/rooms/roomDetailDto';
 
 const HotelDetailPage = ({ route, navigation }) => {
@@ -27,10 +26,10 @@ const HotelDetailPage = ({ route, navigation }) => {
       .catch(error => console.log(error.response));
   }
 
-
   useEffect(() => {
     getHotelWithImages()
-  }, []);
+  }, [id]);
+
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -84,19 +83,22 @@ const HotelDetailPage = ({ route, navigation }) => {
       setRefreshing(false);
     }, 1000);
   };
-
+  const navigateToPage = (id, title) => {
+    navigation.navigate("RoomDetailPage", { id: id, title: title });
+  }
   const roomRenderItem = ({ item }: { item: RoomDetailDto }) => {
     return (
       <View style={styles.roomContainer}>
-        <Image
-          style={styles.roomImage}
-          source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.images[0]}` }}
-        />
-
         <View style={styles.roomInfoContainer}>
-          <Text style={styles.text}>{item.name}</Text>
-          <Text style={styles.text}>₺{item.price}/Gecelik</Text>
+          <Text style={{ ...styles.text, fontSize: 20, fontWeight: "bold" }}>{item.name}</Text>
         </View>
+        <Image style={styles.roomImage}
+          source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.images[0]}` }} />
+        <TouchableOpacity activeOpacity={0.8} style={styles.roomInfoContainer} onPress={() => navigateToPage(item.id, item.name)}>
+          <Text style={styles.buttonText}>
+            <MaterialCommunityIcons name="arrow-right-bold-circle" size={24} />
+          </Text>
+        </TouchableOpacity>
       </View>
 
     );
@@ -110,11 +112,18 @@ const HotelDetailPage = ({ route, navigation }) => {
           <>
             <CarouselComponent data={hotelCarouselItems} navigation={navigation} />
             <View style={styles.container}>
+              <TouchableOpacity activeOpacity={1} onPress={toggleDescription}>
+                <Text style={styles.text}>{getDescriptionToShow()}</Text>
+              </TouchableOpacity>
               <View style={styles.infoContainer}>
                 {renderStars(hotel?.star)}
                 <Text style={styles.text}>{hotel?.star}/10</Text>
                 <MaterialCommunityIcons name="phone" style={styles.infoIcon} />
                 <Text style={styles.infoText}>{hotel?.phone}</Text>
+              </View>
+              <View style={styles.infoContainer}>
+                <MaterialCommunityIcons name="map-marker" style={styles.infoIcon} />
+                <Text style={styles.infoText}>{hotel?.address}</Text>
               </View>
               <View style={styles.infoContainer}>
                 <MaterialCommunityIcons name="email" style={styles.infoIcon} />
@@ -125,14 +134,7 @@ const HotelDetailPage = ({ route, navigation }) => {
                 <Text style={styles.infoText}>{hotel?.website}</Text>
               </View>
 
-              <View style={styles.infoContainer}>
-                <MaterialCommunityIcons name="map-marker" style={styles.infoIcon} />
-                <Text style={styles.infoText}>{hotel?.address}</Text>
-              </View>
 
-              <TouchableOpacity activeOpacity={1} onPress={toggleDescription}>
-                <Text style={styles.text}>{getDescriptionToShow()}</Text>
-              </TouchableOpacity>
             </View>
           </>
         }
@@ -142,6 +144,7 @@ const HotelDetailPage = ({ route, navigation }) => {
 
   return (
     <FlatList
+      nestedScrollEnabled={true}
       showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
       data={hotel ? hotel.rooms : []}
       ListHeaderComponent={renderHeader}

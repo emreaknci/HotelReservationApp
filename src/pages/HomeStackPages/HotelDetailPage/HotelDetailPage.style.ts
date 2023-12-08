@@ -14,7 +14,6 @@ export default StyleSheet.create({
     text: {
         fontSize: 16,
         textAlign: 'justify',
-        marginVertical: 5,
         color: "white",
         backgroundColor: colors.primary,
     },
@@ -44,15 +43,18 @@ export default StyleSheet.create({
     },
     roomImage: {
         width: '100%',
-        height: 150,
+        height: 200,
         resizeMode: 'cover',
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
     },
     roomInfoContainer: {
         marginVertical: 10,
         marginHorizontal: 10,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
+    },
+    buttonText:
+    {
+      fontSize: 18,
+      color: colors.text,
     },
 });
