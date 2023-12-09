@@ -21,6 +21,7 @@ import HotelDetailPage from "../pages/HomeStackPages/HotelDetailPage/HotelDetail
 import RoomDetailPage from '..//pages/HomeStackPages/HotelDetailPage/RoomDetailPage/RoomDetailPage';
 import BookingPage from './../pages/ReservationStackPages/BookingPage/BookingPage';
 import BackButtonComponent from '../components/BackButtonComponent/BackButtonComponent';
+import MyReservationsPage from './../pages/ReservationStackPages/MyReservationsPage/MyReservationsPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -55,9 +56,13 @@ const HomeStack = () => {
 const ReservationStack = () => {
   return (
     <Stack.Navigator screenOptions={commonScreenOptions}>
-      <Stack.Screen
-        name="ReservationStackPages"
-        component={ReservationStackPages}
+      <Stack.Screen name="MyReservationsPage" component={MyReservationsPage}
+        options={
+          {
+            headerShown: true, title: "Rezervasyonlarım", headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+          }
+        }
       />
       <Stack.Screen
         name="BookingPage"
