@@ -90,13 +90,13 @@ const HotelDetailPage = ({ route, navigation }) => {
     return (
       <View style={styles.roomContainer}>
         <View style={styles.roomInfoContainer}>
-          <Text style={{ ...styles.text, fontSize: 20, fontWeight: "bold" }}>{item.name}</Text>
+          <Text style={{ ...styles.text, fontSize: 24, fontWeight: "bold" }}>{item.name}</Text>
         </View>
         <Image style={styles.roomImage}
           source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.images[0]}` }} />
-        <TouchableOpacity activeOpacity={0.8} style={styles.roomInfoContainer} onPress={() => navigateToPage(item.id, item.name)}>
+        <TouchableOpacity activeOpacity={0.8} style={{...styles.roomInfoContainer,marginVertical:2}} onPress={() => navigateToPage(item.id, item.name)}>
           <Text style={styles.buttonText}>
-            <MaterialCommunityIcons name="arrow-right-bold-circle" size={24} />
+            <MaterialCommunityIcons name="arrow-right-bold-circle" size={40} />
           </Text>
         </TouchableOpacity>
       </View>
@@ -133,8 +133,6 @@ const HotelDetailPage = ({ route, navigation }) => {
                 <MaterialCommunityIcons name="web" style={styles.infoIcon} />
                 <Text style={styles.infoText}>{hotel?.website}</Text>
               </View>
-
-
             </View>
           </>
         }

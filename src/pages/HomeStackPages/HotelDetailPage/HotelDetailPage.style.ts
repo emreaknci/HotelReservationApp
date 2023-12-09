@@ -9,7 +9,6 @@ export default StyleSheet.create({
         marginHorizontal: 10,
         marginVertical: 15,
         borderRadius: 10,
-        paddingBottom: 0
     },
     text: {
         fontSize: 16,

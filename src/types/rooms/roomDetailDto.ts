@@ -1,5 +1,4 @@
 import { RoomType } from "src/enums/roomType";
-import Hotel from "../hotels/hotel";
 
 export default interface RoomDetailDto {
     id: number;
@@ -13,6 +12,6 @@ export default interface RoomDetailDto {
     description?: string | null;
     name?: string | null;
     hotelId: number;
-    hotel?: Hotel | null;
+    hotelName?: string | null;
     images?: string[] | null;
 }

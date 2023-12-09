@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import colors from '../../colors';
 import baseStyles from "../../styles"
 import AdminPanelStackPages from '../pages/AdminPanelStackPages';
@@ -19,6 +19,8 @@ import HomeStackPages from '../pages/HomeStackPages';
 import ChangePasswordPage from '../pages/AccountStackPages/ChangePasswordPage';
 import HotelDetailPage from "../pages/HomeStackPages/HotelDetailPage/HotelDetailPage"
 import RoomDetailPage from '..//pages/HomeStackPages/HotelDetailPage/RoomDetailPage/RoomDetailPage';
+import BookingPage from './../pages/ReservationStackPages/BookingPage/BookingPage';
+import BackButtonComponent from '../components/BackButtonComponent/BackButtonComponent';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -50,13 +52,27 @@ const HomeStack = () => {
   );
 };
 
-const ReservationStack = ({ navigation }) => {
+const ReservationStack = () => {
   return (
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen
         name="ReservationStackPages"
         component={ReservationStackPages}
-
+      />
+      <Stack.Screen
+        name="BookingPage"
+        component={BookingPage}
+        options={({ route, navigation }) => {
+          const title = route.params && route.params["title"] ? route.params["title"] : "Rezer";
+          return {
+            headerShown: true,
+            title: title,
+            headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.primary },
+            headerTitleAlign: "center",
+            headerLeft: () => <BackButtonComponent />,
+          };
+        }}
       />
     </Stack.Navigator>
   )
@@ -135,7 +151,6 @@ const AppNavigator = () => {
                 />
               ),
             }}
-
           />}
           <Tab.Screen
             name="AccountStack"

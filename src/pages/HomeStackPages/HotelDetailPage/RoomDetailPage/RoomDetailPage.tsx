@@ -1,7 +1,7 @@
 
 import { View, Text } from "react-native";
 import styles from "./RoomDetailPage.style";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import RoomDetailDto from './../../../../types/rooms/roomDetailDto';
 import RoomService from './../../../../services/roomService';
 import CarouselComponent, { CarouselItem } from './../../../../components/CarouselComponent/CarouselComponent';
@@ -9,12 +9,13 @@ import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from "./../../../../../colors";
 import { ScrollView } from "react-native";
+import { AuthContext } from './../../../../context/AuthContext';
 const RoomDetailPage = ({ route, navigation }) => {
   const { id } = route.params;
   const [room, setRoom] = useState<RoomDetailDto>(null);
   const [showFullDescription, setShowFullDescription] = useState(false);
   const [roomCarouselItems, setRoomCarouselItems] = useState<CarouselItem[]>(null);
-
+  const authContext = useContext(AuthContext);
 
   const getRoom = () => {
     RoomService.getRoomByIdWithImages(id)
@@ -43,51 +44,65 @@ const RoomDetailPage = ({ route, navigation }) => {
         : description;
     }
   };
+
+  const navigateToBookingPage = () => {
+    navigation.navigate('ReservationStack', {
+      screen: 'BookingPage',
+      params: { id: room.id, title: `Rezervasyon Yap` },
+    });
+  }
+
+
   return (
     <>
       {room &&
         <>
+          <CarouselComponent data={roomCarouselItems} navigation={navigation} />
           <View style={styles.container}>
-            <ScrollView nestedScrollEnabled={true}>
-              <CarouselComponent data={roomCarouselItems} navigation={navigation} />
-
+            <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
               <View style={styles.infoContainer}>
                 <TouchableOpacity activeOpacity={1} onPress={toggleDescription}>
                   <Text style={{ ...styles.text, fontWeight: "bold" }}>Açıklama</Text>
                   <Text style={styles.text}>{getDescriptionToShow()}</Text>
                 </TouchableOpacity>
+                <Text style={{ ...styles.text, fontWeight: "bold", marginTop: 20 }}>Oda İmkanları</Text>
+                <View style={styles.content}>
+                  <View style={styles.contentItem}>
+                    <MaterialCommunityIcons name="bed" size={24} color={colors.primary} style={styles.icon} />
+                    <Text style={styles.contentItemText}>{room.capacity} Kişilik</Text>
+
+                    <MaterialCommunityIcons name="bookshelf" size={24} color={colors.primary} style={styles.icon} />
+                    <Text style={styles.contentItemText}>Kitaplık</Text>
+                  </View>
+
+                  <View style={styles.contentItem}>
+                    <MaterialCommunityIcons name="wifi" size={24} color={colors.primary} style={styles.icon} />
+                    <Text style={styles.contentItemText}>Wifi</Text>
+
+                    <MaterialCommunityIcons name="desk" size={24} color={colors.primary} style={styles.icon} />
+                    <Text style={styles.contentItemText}>Çalışma Masası</Text>
+                  </View>
+
+                  <View style={styles.contentItem}>
+                    <MaterialCommunityIcons name="television" size={24} color={colors.primary} style={styles.icon} />
+                    <Text style={styles.contentItemText}>TV</Text>
+
+                    <MaterialCommunityIcons name="fan" size={24} color={colors.primary} style={styles.icon} />
+                    <Text style={styles.contentItemText}>Klima</Text>
+                  </View>
+                </View>
               </View>
-              <Text style={{ ...styles.text, fontWeight: "bold" }}>Oda İmkanları</Text>
-
-              <View style={styles.content}>
-                <View style={styles.contentItem}>
-                  <MaterialCommunityIcons name="bed" size={24} color={colors.primary} style={styles.icon} />
-                  <Text style={styles.contentItemText}>{room.capacity} Kişilik</Text>
-
-                  <MaterialCommunityIcons name="bookshelf" size={24} color={colors.primary} style={styles.icon} />
-                  <Text style={styles.contentItemText}>Kitaplık</Text>
-                </View>
-
-                <View style={styles.contentItem}>
-                  <MaterialCommunityIcons name="wifi" size={24} color={colors.primary} style={styles.icon} />
-                  <Text style={styles.contentItemText}>Wifi</Text>
-
-                  <MaterialCommunityIcons name="desk" size={24} color={colors.primary} style={styles.icon} />
-                  <Text style={styles.contentItemText}>Çalışma Masası</Text>
-                </View>
-
-                <View style={styles.contentItem}>
-                  <MaterialCommunityIcons name="television" size={24} color={colors.primary} style={styles.icon} />
-                  <Text style={styles.contentItemText}>TV</Text>
-
-                  <MaterialCommunityIcons name="fan" size={24} color={colors.primary} style={styles.icon} />
-                  <Text style={styles.contentItemText}>Klima</Text>
-                </View>
-              </View>
+              {authContext.isAuthenticated
+                ?
+                <TouchableOpacity activeOpacity={0.8} style={styles.button} onPress={() => navigateToBookingPage()}>
+                  <Text style={styles.buttonText}>Rezervasyon Yap</Text>
+                </TouchableOpacity>
+                :
+                <TouchableOpacity activeOpacity={0.8} style={styles.button} disabled>
+                  <Text style={{ ...styles.buttonText, fontSize: 14 }}>Rezervasyon Yapabilmek İçin Lütfen Giriş Yapın</Text>
+                </TouchableOpacity>}
             </ScrollView>
-            <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-              <Text style={styles.buttonText}>Rezervasyon Yap</Text>
-            </TouchableOpacity>
+
           </View>
         </>
       }
