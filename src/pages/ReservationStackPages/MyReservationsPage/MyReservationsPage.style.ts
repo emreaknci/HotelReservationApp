@@ -54,7 +54,7 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   reservationCard: {
-    backgroundColor: colors.primary,
+    backgroundColor: "white",
     borderRadius: 20,
     margin: 10,
     padding: 15,
@@ -73,10 +73,10 @@ export default StyleSheet.create({
   reservationCardHeaderText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: colors.text,
+    color: colors.primary,
   },
   reservationCardHeaderSubText: {
-    color: colors.background,
+    color: colors.primary,
   },
   reservationCardBody: {},
   reservationCardBodyRow: {
@@ -86,7 +86,7 @@ export default StyleSheet.create({
   },
   reservationCardBodyRowText: {
     fontSize: 16,
-    color: colors.text,
+    color: colors.primary,
 
   },
 

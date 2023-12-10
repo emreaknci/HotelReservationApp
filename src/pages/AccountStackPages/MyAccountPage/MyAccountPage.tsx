@@ -5,6 +5,7 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../../context/AuthContext";
 import { useToast } from "react-native-toast-notifications";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import HeaderComponent from "../../../components/HeaderComponent/HeaderComponent";
 
 const MyAccountPage = ({ navigation }) => {
   const toast = useToast();
@@ -44,7 +45,7 @@ const MyAccountPage = ({ navigation }) => {
   ];
 
   const renderItem = ({ item }: { item: MenuItem }) => (
-    <View>
+    <>
       <TouchableOpacity
         style={styles.menuItem}
         onPress={() => handleMenuItemPress(item)}
@@ -62,7 +63,7 @@ const MyAccountPage = ({ navigation }) => {
           />
         </View>
       )}
-    </View>
+    </>
   );
 
   const renderSubMenuOption = ({ item }) => (
@@ -99,15 +100,18 @@ const MyAccountPage = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <MaterialCommunityIcons name="account-circle" style={[styles.headerIcon, { fontSize: 100 }]} />
-      <Text style={styles.title}>{authContext.user?.fullName}</Text>
-      <FlatList
-        data={menuItems}
-        keyExtractor={(item) => item.id}
-        renderItem={renderItem}
-      />
-    </View>
+    <>
+      <HeaderComponent />
+
+      <View style={styles.container}>
+        <MaterialCommunityIcons name="account-circle" style={[styles.headerIcon, { fontSize: 100 }]} />
+        <Text style={styles.title}>{authContext.user?.fullName}</Text>
+        <FlatList
+          data={menuItems}
+          keyExtractor={(item) => item.id}
+          renderItem={renderItem}
+        />
+      </View></>
   );
 }
 interface MenuItem {

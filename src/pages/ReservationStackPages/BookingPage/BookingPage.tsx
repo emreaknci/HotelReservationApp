@@ -390,7 +390,7 @@ const BookingPage = ({ route, navigation }) => {
           <View style={{ ...styles.buttonContainer, marginTop: 10 }}>
             <TouchableOpacity style={{ ...styles.button, width: "45%", margin: 0, marginRight: 10, backgroundColor: colors.background, borderColor: colors.primary, borderWidth: 1 }} onPress={() => setStep(1)} >
               <Text style={{ ...styles.buttonText, color: colors.primary }}>
-                Geri Dön
+                Tarihleri Düzenle
               </Text>
             </TouchableOpacity>
             <TouchableOpacity style={{ ...styles.button, width: "45%", margin: 0, marginLeft: 10 }} onPress={handlePayment} >

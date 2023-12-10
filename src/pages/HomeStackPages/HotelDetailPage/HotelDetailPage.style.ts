@@ -5,16 +5,23 @@ import colors from "../../../../colors"
 export default StyleSheet.create({
     container: {
         ...mainStyles.container,
-        backgroundColor: colors.primary,
-        marginHorizontal: 10,
+        backgroundColor: colors.text,
+        marginHorizontal: 15,
         marginVertical: 15,
         borderRadius: 10,
+        shadowColor: colors.primary,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 5,
+        elevation: 10,
     },
     text: {
         fontSize: 16,
         textAlign: 'justify',
-        color: "white",
-        backgroundColor: colors.primary,
+        color: colors.primary,
     },
     infoContainer: {
         flexDirection: 'row',
@@ -22,23 +29,32 @@ export default StyleSheet.create({
         marginVertical: 5,
         alignContent: 'center',
         justifyContent: 'space-between',
+      
     },
     infoText: {
         fontSize: 18,
         textAlign: 'right',
-        color: "white",
+        color: colors.primary,
     },
     infoIcon:
     {
         fontSize: 24,
-        color: "white",
+        color: colors.primary,
     },
     roomContainer:
     {
         marginVertical: 15,
-        marginHorizontal: 10,
+        marginHorizontal: 15,
         borderRadius: 10,
-        backgroundColor: colors.primary,
+        backgroundColor: colors.text,
+        shadowColor: colors.primary,
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 5,
+        elevation: 10,
     },
     roomImage: {
         width: '100%',
@@ -54,6 +70,6 @@ export default StyleSheet.create({
     buttonText:
     {
       fontSize: 18,
-      color: colors.text,
+      color: colors.primary,
     },
 });

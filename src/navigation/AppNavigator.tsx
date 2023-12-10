@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { StyleSheet } from 'react-native';
+import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { View } from 'react-native';
 import colors from '../../colors';
 import baseStyles from "../../styles"
 import AdminPanelStackPages from '../pages/AdminPanelStackPages';
-import ReservationStackPages from '../pages/ReservationStackPages';
 import LoginPage from '../pages/AccountStackPages/LoginPage';
 import RegisterPage from '../pages/AccountStackPages/RegisterPage';
 import MyAccountPage from '../pages/AccountStackPages/MyAccountPage';
@@ -55,27 +54,28 @@ const HomeStack = () => {
 
 const ReservationStack = () => {
   return (
-    <Stack.Navigator screenOptions={commonScreenOptions}>
+    <Stack.Navigator screenOptions={commonScreenOptions} initialRouteName="MyReservationsPage">
       <Stack.Screen name="MyReservationsPage" component={MyReservationsPage}
         options={
           {
-            headerShown: true, title: "Rezervasyonlarım", headerTintColor: colors.text,
-            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center",
+            headerLeft: null
           }
+
         }
       />
       <Stack.Screen
         name="BookingPage"
         component={BookingPage}
         options={({ route, navigation }) => {
-          const title = route.params && route.params["title"] ? route.params["title"] : "Rezer";
+          const title = route.params && route.params["title"] ? route.params["title"] : "Rezervasyon Yap";
           return {
             headerShown: true,
             title: title,
             headerTintColor: colors.text,
             headerStyle: { backgroundColor: colors.primary },
             headerTitleAlign: "center",
-            headerLeft: () => <BackButtonComponent />,
+            // headerLeft: () => <BackButtonComponent />,
           };
         }}
       />
@@ -148,15 +148,26 @@ const AppNavigator = () => {
           {authContext.isAuthenticated && <Tab.Screen
             name="ReservationStack"
             component={ReservationStack}
-            options={{
-              tabBarLabel: 'Rezervasyonlarım',
-              tabBarIcon: ({ color, size, focused }) => (
-                <MaterialCommunityIcons color={color} size={size}
-                  name={focused ? 'calendar-check' : 'calendar-check-outline'}
-                />
-              ),
+            options={({ route, navigation }) => {
+              return {
+                tabBarLabel: 'Rezervasyonlarım',
+                tabBarIcon: ({ color, size, focused }) => (
+                  <MaterialCommunityIcons
+                    color={color}
+                    size={size}
+                    name={focused ? 'calendar-check' : 'calendar-check-outline'}
+                  />
+                ),
+                tabBarButton: props => (
+                  <TouchableOpacity activeOpacity={1}
+                    {...props}
+                    onPress={() => navigation.navigate('ReservationStack', { screen: 'MyReservationsPage' })}
+                  />
+                ),
+              };
             }}
-          />}
+          />
+          }
           <Tab.Screen
             name="AccountStack"
             component={AccountStack}

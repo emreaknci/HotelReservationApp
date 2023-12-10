@@ -11,11 +11,11 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.primary,
+        // borderBottomWidth: 1,
+        // borderBottomColor: colors.primary,
         width: '95%',
         alignSelf: 'center',
-        
+
     },
     menuIcon: {
         fontSize: 24,
@@ -33,7 +33,6 @@ export default StyleSheet.create({
         alignSelf: 'center',
     },
     headerIcon: {
-        marginRight: 10,
         color: colors.primary,
         fontSize: 20,
         alignSelf: 'center',
@@ -47,6 +46,8 @@ export default StyleSheet.create({
     },
     subMenu: {
         paddingHorizontal: 30,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.primary,
     },
     subMenuItem: {
         flexDirection: 'row',

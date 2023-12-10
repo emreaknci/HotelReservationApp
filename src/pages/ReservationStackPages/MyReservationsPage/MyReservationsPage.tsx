@@ -1,10 +1,12 @@
 
 import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
 import styles from "./MyReservationsPage.style";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReservationService from './../../../services/reservationService';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ReservationListDto from './../../../types/reservations/reservationListDto';
+import { useFocusEffect } from "@react-navigation/native";
+import HeaderComponent from './../../../components/HeaderComponent/HeaderComponent';
 
 const MyReservationsPage = () => {
   const [loading, setLoading] = useState(false);
@@ -48,17 +50,19 @@ const MyReservationsPage = () => {
 
   };
 
-  useEffect(() => {
-    if (activeReservationBtnActive) {
-      getMyActiveReservations();
-    }
-    else if (pastReservationBtnActive) {
-      getMyPastReservations();
-    }
-    else {
-      getMyAllReservations();
-    }
-  }, [])
+  useFocusEffect(
+    useCallback(() => {
+      if (activeReservationBtnActive) {
+        getMyActiveReservations();
+      }
+      else if (pastReservationBtnActive) {
+        getMyPastReservations();
+      }
+      else {
+        getMyAllReservations();
+      }
+    }, [])
+  )
 
   const handlePastReservationBtn = () => {
     setPastReservationBtnActive(true);
@@ -107,7 +111,7 @@ const MyReservationsPage = () => {
   }
   const renderMyReservations = () => {
     return (
-      <ScrollView showsVerticalScrollIndicator={false} style={{marginVertical:50}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ marginVertical: 50 }}>
         {myReservations.map((reservation) => (
           <View key={reservation.id} style={styles.reservationCard} >
             <View style={styles.reservationCardHeader} >
@@ -126,7 +130,7 @@ const MyReservationsPage = () => {
               </View>
               <View style={styles.reservationCardBodyRow} >
                 <Text style={styles.reservationCardBodyRowText} >Durum</Text>
-                <Text style={styles.reservationCardBodyRowText} >{reservation.paymentStatus=="Paid" ?"Ödendi":"İptal Edildi"}</Text>
+                <Text style={styles.reservationCardBodyRowText} >{reservation.paymentStatus == "Paid" ? "Ödendi" : "İptal Edildi"}</Text>
               </View>
               <View style={styles.reservationCardBodyRow} >
                 <Text style={styles.reservationCardBodyRowText} >Toplam Fiyat</Text>
@@ -139,37 +143,39 @@ const MyReservationsPage = () => {
     )
   }
   return (
-    <View style={styles.container} >
-      {loading ?
-        <>
-          <View style={styles.errorContainer} >
-            <ActivityIndicator size="large" color="#de2d5f" />
-            <Text style={styles.errorContainerText}>Yükleniyor...</Text>
-          </View>
-        </>
-        :
-        <>
-          {myReservations
-            ?
-            <>
-              <View style={styles.reservationContainer} >
-                {renderReservationButtons()}
-                {renderMyReservations()}
-              </View>
-
-            </>
-            :
-            <>
-              <View style={styles.reservationContainer} >
-                {renderReservationButtons()}
-              </View>
-              <View style={styles.errorContainer} >
-                <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
-                <Text style={styles.errorContainerText}>Rezervasyon kaydı bulunamadı.</Text>
-              </View>
-            </>
-          }</>}
-    </View>
+    <>
+      <HeaderComponent />
+      <View style={styles.container} >
+        {loading ?
+          <>
+            <View style={styles.errorContainer} >
+              <ActivityIndicator size="large" color="#de2d5f" />
+              <Text style={styles.errorContainerText}>Yükleniyor...</Text>
+            </View>
+          </>
+          :
+          <>
+            {myReservations
+              ?
+              <>
+                <View style={styles.reservationContainer} >
+                  {renderReservationButtons()}
+                  {renderMyReservations()}
+                </View>
+              </>
+              :
+              <>
+                <View style={styles.reservationContainer} >
+                  {renderReservationButtons()}
+                </View>
+                <View style={styles.errorContainer} >
+                  <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
+                  <Text style={styles.errorContainerText}>Rezervasyon kaydı bulunamadı.</Text>
+                </View>
+              </>
+            }</>}
+      </View>
+    </>
   );
 }
 
