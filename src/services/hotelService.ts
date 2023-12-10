@@ -11,7 +11,10 @@ const HotelService = {
 
     getByIdWithImages: (id: number): Promise<AxiosResponse<Result<HotelDetailDto>>> => {
         return BaseService.get(`/hotel/get-by-id-with-images/${id}`);
-    }
+    },
+    changeHotelStatus: async (hotelId: number): Promise<AxiosResponse<Result<boolean>>> => {
+        return BaseService.get(`/hotel/change-hotel-status?hotelId=${hotelId}`);
+    },
 }
 
 export default HotelService;

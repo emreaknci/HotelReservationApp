@@ -13,7 +13,8 @@ const HomePage = ({ navigation }) => {
   const getHotelWithImages = () => {
     hotelService.getAllWithImages()
       .then((res) => {
-        const carouselItems = res.data.data.map((item) => {
+        var active= res.data.data.filter((item) => item.status == true);
+        const carouselItems = active.map((item) => {
           return {
             id: item.id,
             image: item.images[0],
@@ -24,7 +25,6 @@ const HomePage = ({ navigation }) => {
       }).catch((err) => {
         console.log(err);
       })
-
   }
 
   useEffect(() => {

@@ -40,11 +40,11 @@ const RoomsPage = ({ navigation }) => {
       return;
     }
 
-    const filteredReservations = rooms.filter(room =>
+    const filteredRooms = rooms.filter(room =>
       room.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    setRooms(filteredReservations);
+    setRooms(filteredRooms);
   }, [searchText]);
 
   const navigateToRoomDetailPage = (roomId: number, roomName: string) => {

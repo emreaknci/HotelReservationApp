@@ -11,7 +11,7 @@ const RoomService = {
     getRoomsWithImages: (): Promise<AxiosResponse<Result<RoomDetailDto[]>>> => {
         return BaseService.get(`/room/get-rooms-with-images`);
     },
-    changeRoomStatus: async (roomId: number): Promise<AxiosResponse<Result<RoomDetailDto>>> => {
+    changeRoomStatus: async (roomId: number): Promise<AxiosResponse<Result<boolean>>> => {
         return BaseService.get(`/room/change-room-status?roomId=${roomId}`);
     },
 }
