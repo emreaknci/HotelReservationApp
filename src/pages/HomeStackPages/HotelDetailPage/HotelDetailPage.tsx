@@ -18,6 +18,7 @@ const HotelDetailPage = ({ route, navigation }) => {
   const getHotelWithImages = () => {
     HotelService.getByIdWithImages(id)
       .then(response => {
+        response.data.data.rooms = response.data.data.rooms.filter((room) => { return room.status === true })
         setHotel(response.data.data)
         setHotelCarouselItems(response.data.data.images.map((image) => {
           return { image: image }
@@ -94,7 +95,7 @@ const HotelDetailPage = ({ route, navigation }) => {
         </View>
         <Image style={styles.roomImage}
           source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.images[0]}` }} />
-        <TouchableOpacity activeOpacity={0.8} style={{...styles.roomInfoContainer,marginVertical:2}} onPress={() => navigateToPage(item.id, item.name)}>
+        <TouchableOpacity activeOpacity={0.8} style={{ ...styles.roomInfoContainer, marginVertical: 2 }} onPress={() => navigateToPage(item.id, item.name)}>
           <Text style={styles.buttonText}>
             <MaterialCommunityIcons name="arrow-right-bold-circle" size={40} />
           </Text>

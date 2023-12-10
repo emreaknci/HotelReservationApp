@@ -5,9 +5,15 @@ import RoomDetailDto from "src/types/rooms/roomDetailDto";
 
 
 const RoomService = {
-    getRoomByIdWithImages:  (id:number): Promise<AxiosResponse<Result<RoomDetailDto>>> => {
+    getRoomByIdWithImages: (id: number): Promise<AxiosResponse<Result<RoomDetailDto>>> => {
         return BaseService.get(`/room/get-room-by-id-with-images/${id}`);
-    }
+    },
+    getRoomsWithImages: (): Promise<AxiosResponse<Result<RoomDetailDto[]>>> => {
+        return BaseService.get(`/room/get-rooms-with-images`);
+    },
+    changeRoomStatus: async (roomId: number): Promise<AxiosResponse<Result<RoomDetailDto>>> => {
+        return BaseService.get(`/room/change-room-status?roomId=${roomId}`);
+    },
 }
 
 export default RoomService;
