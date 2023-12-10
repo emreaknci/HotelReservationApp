@@ -155,7 +155,6 @@ const BookingPage = ({ route, navigation }) => {
 
     ReservationService.createReservation(reservationData)
       .then((response) => {
-        console.log(response.data)
         setStep(3)
         setReservationConfirmed(true);
       })

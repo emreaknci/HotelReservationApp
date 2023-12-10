@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
@@ -21,6 +21,15 @@ import RoomDetailPage from '..//pages/HomeStackPages/HotelDetailPage/RoomDetailP
 import BookingPage from './../pages/ReservationStackPages/BookingPage/BookingPage';
 import BackButtonComponent from '../components/BackButtonComponent/BackButtonComponent';
 import MyReservationsPage from './../pages/ReservationStackPages/MyReservationsPage/MyReservationsPage';
+import HotelsPage from './../pages/AdminPanelStackPages/HotelsPage/HotelsPage';
+import RoomsPage from './../pages/AdminPanelStackPages/RoomsPage/RoomsPage';
+import UsersPage from './../pages/AdminPanelStackPages/UsersPage/UsersPage';
+import AddAdminPage from './../pages/AdminPanelStackPages/AddAdminPage/AddAdminPage';
+import AddHotelPage from './../pages/AdminPanelStackPages/AddHotelPage/AddHotelPage';
+import AddRoomPage from './../pages/AdminPanelStackPages/AddRoomPage/AddRoomPage';
+import EditHotelPage from './../pages/AdminPanelStackPages/EditHotelPage/EditHotelPage';
+import EditRoomPage from './../pages/AdminPanelStackPages/EditRoomPage/EditRoomPage';
+import ReservationsPage from './../pages/AdminPanelStackPages/ReservationsPage/ReservationsPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -112,8 +121,61 @@ const AccountStack = () => {
 const AdminPanelStack = () => {
   return (
     <Stack.Navigator screenOptions={commonScreenOptions}>
-      <Stack.Screen name="AdminPanelStackPages" component={AdminPanelStackPages}
-      />
+      <Stack.Screen name="AdminPanelStackPages" component={AdminPanelStackPages} />
+      <Stack.Screen name="HotelsPage" component={HotelsPage} options={
+        {
+          headerShown: true, title: "Oteller", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="RoomsPage" component={RoomsPage} options={
+        {
+          headerShown: true, title: "Odalar", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="UsersPage" component={UsersPage} options={
+        {
+          headerShown: true, title: "Kullanıcılar", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="ReservationsPage" component={ReservationsPage} options={
+        {
+          headerShown: true, title: "Rezervasyonlar", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="AddAdminPage" component={AddAdminPage} options={
+        {
+          headerShown: true, title: "Admin Ekle", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="AddHotelPage" component={AddHotelPage} options={
+        {
+          headerShown: true, title: "Otel Ekle", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="AddRoomPage" component={AddRoomPage} options={
+        {
+          headerShown: true, title: "Oda Ekle", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="EditHotelPage" component={EditHotelPage} options={
+        {
+          headerShown: true, title: "Otel Bilgilerini Düzenle", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="EditRoomPage" component={EditRoomPage} options={
+        {
+          headerShown: true, title: "Oda Bilgilerini Düzenle", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
     </Stack.Navigator>
   );
 };

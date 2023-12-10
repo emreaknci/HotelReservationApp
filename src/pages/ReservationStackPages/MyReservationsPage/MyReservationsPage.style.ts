@@ -89,5 +89,15 @@ export default StyleSheet.create({
     color: colors.primary,
 
   },
+  reservationCardBodyRowButton: {
+    backgroundColor: colors.primary,
+    borderRadius: 50,
+    padding: 10,
+    marginTop: 10,
+  },
+  reservationCardBodyRowButtonText: {
+    fontSize: 16,
+    color: colors.text,
+  },
 
 });
