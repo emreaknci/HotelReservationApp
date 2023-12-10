@@ -1,5 +1,7 @@
 export default interface ReservationListDto {
     id?: number | null;
+    customerId?: number | null;
+    customerFullName?: string | null;
     hotelId?: number | null;
     hotelName?: string | null;
     roomId?: number | null;

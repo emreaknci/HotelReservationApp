@@ -161,7 +161,6 @@ const MyReservationsPage = ({ route, navigation }) => {
     console.log("cancel tocuhed", reservationId)
     await ReservationService.cancelReservation(reservationId)
       .then((response) => {
-        if (response.data.success) {
           toast.show(response.data.message, {
             type: "custom_type",
             placement: "center",
@@ -169,7 +168,6 @@ const MyReservationsPage = ({ route, navigation }) => {
             swipeEnabled: true,
           });
           handleReservationBtn();
-        }
       })
       .catch((err) => {
         console.log(err.response.data);

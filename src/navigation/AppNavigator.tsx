@@ -24,7 +24,6 @@ import MyReservationsPage from './../pages/ReservationStackPages/MyReservationsP
 import HotelsPage from './../pages/AdminPanelStackPages/HotelsPage/HotelsPage';
 import RoomsPage from './../pages/AdminPanelStackPages/RoomsPage/RoomsPage';
 import UsersPage from './../pages/AdminPanelStackPages/UsersPage/UsersPage';
-import AddAdminPage from './../pages/AdminPanelStackPages/AddAdminPage/AddAdminPage';
 import AddHotelPage from './../pages/AdminPanelStackPages/AddHotelPage/AddHotelPage';
 import AddRoomPage from './../pages/AdminPanelStackPages/AddRoomPage/AddRoomPage';
 import EditHotelPage from './../pages/AdminPanelStackPages/EditHotelPage/EditHotelPage';
@@ -143,12 +142,6 @@ const AdminPanelStack = () => {
       <Stack.Screen name="ReservationsPage" component={ReservationsPage} options={
         {
           headerShown: true, title: "Rezervasyonlar", headerTintColor: colors.text,
-          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
-        }
-      } />
-      <Stack.Screen name="AddAdminPage" component={AddAdminPage} options={
-        {
-          headerShown: true, title: "Admin Ekle", headerTintColor: colors.text,
           headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
         }
       } />

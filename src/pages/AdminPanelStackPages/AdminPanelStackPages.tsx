@@ -37,7 +37,6 @@ const AdminPanelPage = ({ navigation }) => {
       icon: 'account',
       subMenus: [
         { id: '21', title: 'Görüntüle', icon: 'eye', navigatePage: "UsersPage", onPress: null },
-        { id: '22', title: 'Admin Ekle', icon: 'plus', navigatePage: "AddAdminPage", onPress: null },
       ],
     },
     {

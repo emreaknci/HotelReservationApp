@@ -14,6 +14,9 @@ const ReservationService = {
     createReservation: (dto: CreateReservationDto): Promise<AxiosResponse<Result<Reservation>>> => {
         return BaseService.post("/reservations", dto);
     },
+    getAllWithDetails: (): Promise<AxiosResponse<Result<ReservationListDto[]>>> => {
+        return BaseService.get("/reservations/get-all-with-details");
+    },
     getMyAllReservations: (): Promise<AxiosResponse<Result<ReservationListDto[]>>> => {
         return BaseService.get("/reservations/get-current-user-reservations");
     },
