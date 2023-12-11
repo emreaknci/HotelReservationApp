@@ -25,6 +25,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "permissions": [
+            "CAMERA",
+            "CAMERA_ROLL"
+          ]
+        }
+      ]
+    ]
   }
 }

@@ -7,7 +7,7 @@ export default interface CreateHotelDto {
     email?: string | null;
     website?: string | null;
     description?: string | null;
-    imageUrl?: string | null;
+    images?: Blob[] | null;
     star?: number | null;
     totalRoomCount?: number | null;
 }

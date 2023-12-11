@@ -86,17 +86,17 @@ export default StyleSheet.create({
         ...baseStyles.container,
         justifyContent: 'center',
         alignItems: 'center',
-      },
-      errorContainerText: {
+    },
+    errorContainerText: {
         fontSize: 20,
         color: colors.primary,
         textAlign: 'center',
-      },
-      errorContainerIcon: {
+    },
+    errorContainerIcon: {
         color: colors.primary,
         fontSize: 75,
-      },
-      userCardBodyButtonContainer:{
+    },
+    userCardBodyButtonContainer:{
         flexDirection: 'row',
         width: '100%',
         borderBottomLeftRadius: 10,
@@ -105,7 +105,8 @@ export default StyleSheet.create({
     userCardBodyButton:{
         backgroundColor: colors.primary,
         padding: 10,
-        width: '50%',
+        flex: 1,
+        marginHorizontal: 1,
     },
     userCardBodyButtonText:{
         fontSize: 16,

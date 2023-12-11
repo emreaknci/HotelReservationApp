@@ -20,6 +20,7 @@ const RoomDetailPage = ({ route, navigation }) => {
   const getRoom = () => {
     RoomService.getRoomByIdWithImages(id)
       .then(response => {
+        console.log(response.data.data)
         setRoom(response.data.data)
         setRoomCarouselItems(response.data.data.images.map((image) => {
           return { image: image }
@@ -57,7 +58,7 @@ const RoomDetailPage = ({ route, navigation }) => {
     <>
       {room &&
         <>
-          <CarouselComponent data={roomCarouselItems} navigation={navigation} />
+          {roomCarouselItems && <CarouselComponent data={roomCarouselItems} navigation={navigation} />}
           <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
               <View style={styles.infoContainer}>

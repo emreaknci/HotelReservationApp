@@ -42,7 +42,7 @@ export default StyleSheet.create({
         elevation: 5,
         marginVertical: 10,
     },
-    roomInfoContainer:{
+    roomInfoContainer: {
         paddingHorizontal: 10
     },
     roomCardHeader: {
@@ -70,13 +70,13 @@ export default StyleSheet.create({
         color: colors.primary,
         fontWeight: 'bold'
     },
-    roomCardBodyButton:{
+    roomCardBodyButton: {
         backgroundColor: colors.primary,
         padding: 10,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        flex: 1,
+        marginHorizontal: 1,
     },
-    roomCardBodyButtonText:{
+    roomCardBodyButtonText: {
         fontSize: 16,
         color: '#fff',
         fontWeight: 'bold',
@@ -86,31 +86,20 @@ export default StyleSheet.create({
         ...baseStyles.container,
         justifyContent: 'center',
         alignItems: 'center',
-      },
-      errorContainerText: {
+    },
+    errorContainerText: {
         fontSize: 20,
         color: colors.primary,
         textAlign: 'center',
-      },
-      errorContainerIcon: {
+    },
+    errorContainerIcon: {
         color: colors.primary,
         fontSize: 75,
-      },
-      userCardBodyButtonContainer:{
+    },
+    roomCardBodyButtonContainer: {
         flexDirection: 'row',
         width: '100%',
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10
-    },
-    userCardBodyButton:{
-        backgroundColor: colors.primary,
-        padding: 10,
-        width: '50%',
-    },
-    userCardBodyButtonText:{
-        fontSize: 16,
-        color: '#fff',
-        fontWeight: 'bold',
-        textAlign: 'center'
     },
 });

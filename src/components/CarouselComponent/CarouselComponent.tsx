@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Image, TouchableOpacity, Text, Animated, FlatList, Dimensions } from "react-native";
+import { View, Image, TouchableOpacity, Animated, FlatList, Dimensions } from "react-native";
 import { useRef } from 'react';
 import styles from "./CarouselComponent.style";
 
@@ -17,10 +17,10 @@ export interface CarouselComponentProps {
   data?: CarouselItem[];
   navigation?: any;
   navigatePage?: any;
-
+  isLocalImage?: boolean;
 }
 
-const CarouselComponent = ({ data, navigation, navigatePage }: CarouselComponentProps) => {
+const CarouselComponent = ({ data, navigation, navigatePage, isLocalImage = false }: CarouselComponentProps) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
 
@@ -53,7 +53,7 @@ const CarouselComponent = ({ data, navigation, navigatePage }: CarouselComponent
           horizontal
           showsHorizontalScrollIndicator={false}
           decelerationRate={0}
-          initialScrollIndex={index}
+          initialScrollIndex={data.length > 1 ? index : 0}
           viewabilityConfig={{
             itemVisiblePercentThreshold: 50,
           }}
@@ -66,7 +66,7 @@ const CarouselComponent = ({ data, navigation, navigatePage }: CarouselComponent
           renderItem={({ item, index }) => (
             <TouchableOpacity activeOpacity={1} key={index} onPress={() => navigateToPage(item)}>
               <AnimatedImage
-                source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.image}` }}
+                source={{ uri: isLocalImage ? item.image : `${process.env.EXPO_PUBLIC_API_URL}${item.image}` }}
                 style={{ width: WIDTH, height: HEIGHT }}
               />
             </TouchableOpacity>

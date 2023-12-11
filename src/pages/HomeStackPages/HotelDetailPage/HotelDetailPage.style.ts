@@ -72,4 +72,5 @@ export default StyleSheet.create({
       fontSize: 18,
       color: colors.primary,
     },
+    
 });

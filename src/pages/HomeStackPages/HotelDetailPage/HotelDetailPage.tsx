@@ -1,12 +1,12 @@
-
 import { View, Text, TouchableOpacity, RefreshControl, FlatList, Image } from "react-native";
 import styles from "./HotelDetailPage.style";
 import HotelService from './../../../services/hotelService';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import HotelDetailDto from './../../../types/hotels/hotelDetailDto';
 import CarouselComponent, { CarouselItem } from './../../../components/CarouselComponent/CarouselComponent';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import RoomDetailDto from '../../../types/rooms/roomDetailDto';
+import { useFocusEffect } from "@react-navigation/native";
 
 const HotelDetailPage = ({ route, navigation }) => {
   const { id } = route.params;
@@ -18,7 +18,7 @@ const HotelDetailPage = ({ route, navigation }) => {
   const getHotelWithImages = () => {
     HotelService.getByIdWithImages(id)
       .then(response => {
-        response.data.data.rooms = response.data.data.rooms.filter((room) => { return room.status === true })
+        response.data.data.rooms = response.data.data.rooms && response.data.data.rooms.filter(room => room.status === true);
         setHotel(response.data.data)
         setHotelCarouselItems(response.data.data.images.map((image) => {
           return { image: image }
@@ -27,10 +27,11 @@ const HotelDetailPage = ({ route, navigation }) => {
       .catch(error => console.log(error.response));
   }
 
-  useEffect(() => {
-    getHotelWithImages()
-  }, [id]);
-
+  useFocusEffect(
+    useCallback(() => {
+      getHotelWithImages()
+    }, [])
+  );
 
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
@@ -113,28 +114,34 @@ const HotelDetailPage = ({ route, navigation }) => {
           <>
             <CarouselComponent data={hotelCarouselItems} navigation={navigation} />
             <View style={styles.container}>
-              <TouchableOpacity activeOpacity={1} onPress={toggleDescription}>
+              {hotel?.description && <TouchableOpacity activeOpacity={1} onPress={toggleDescription}>
                 <Text style={styles.text}>{getDescriptionToShow()}</Text>
-              </TouchableOpacity>
-              <View style={styles.infoContainer}>
+              </TouchableOpacity>}
+              {hotel?.phone && <View style={styles.infoContainer}>
                 {renderStars(hotel?.star)}
                 <Text style={styles.text}>{hotel?.star}/10</Text>
                 <MaterialCommunityIcons name="phone" style={styles.infoIcon} />
                 <Text style={styles.infoText}>{hotel?.phone}</Text>
-              </View>
-              <View style={styles.infoContainer}>
+              </View>}
+              {hotel?.address && <View style={styles.infoContainer}>
                 <MaterialCommunityIcons name="map-marker" style={styles.infoIcon} />
                 <Text style={styles.infoText}>{hotel?.address}</Text>
-              </View>
-              <View style={styles.infoContainer}>
+              </View>}
+              {hotel?.email && <View style={styles.infoContainer}>
                 <MaterialCommunityIcons name="email" style={styles.infoIcon} />
                 <Text style={styles.infoText}>{hotel?.email}</Text>
-              </View>
-              <View style={styles.infoContainer}>
+              </View>}
+              {hotel?.website && <View style={styles.infoContainer}>
                 <MaterialCommunityIcons name="web" style={styles.infoIcon} />
                 <Text style={styles.infoText}>{hotel?.website}</Text>
-              </View>
+              </View>}
             </View>
+            {(!hotel.rooms || hotel.rooms.length === 0 || !hotel.rooms.some(room => room.status === true)) &&
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <MaterialCommunityIcons name="alert-circle-outline" style={{ ...styles.infoIcon, fontSize: 48 }} />
+                <Text style={styles.text}>Otele ait oda bilgisi bulunmamaktadır.</Text>
+              </View>
+            }
           </>
         }
       </>
@@ -142,17 +149,19 @@ const HotelDetailPage = ({ route, navigation }) => {
   }
 
   return (
-    <FlatList
-      nestedScrollEnabled={true}
-      showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
-      data={hotel ? hotel.rooms : []}
-      ListHeaderComponent={renderHeader}
-      renderItem={roomRenderItem}
-      keyExtractor={(option) => option.id.toString()}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-      }
-    />
+    <>
+      <FlatList
+        nestedScrollEnabled={true}
+        showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}
+        data={hotel ? hotel.rooms : []}
+        ListHeaderComponent={renderHeader}
+        renderItem={roomRenderItem}
+        keyExtractor={(option) => option.id.toString()}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      />
+    </>
   );
 }
 

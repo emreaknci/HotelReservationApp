@@ -1,5 +1,5 @@
 
-import { View, Text, TouchableOpacity, ActivityIndicator, TextInput, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, TextInput, FlatList, Modal } from "react-native";
 import styles from "./HotelsPage.style";
 import { useCallback, useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
@@ -7,13 +7,15 @@ import HotelService from './../../../services/hotelService';
 import { useFocusEffect } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HotelDetailDto from './../../../types/hotels/hotelDetailDto';
+import ModalComponent from './../../../components/ModalComponent/ModalComponent';
 
 const HotelsPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [hotels, setHotels] = useState<HotelDetailDto[]>(null);
   const toast = useToast();
   const [searchText, setSearchText] = useState("");
-
+  const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false);
+  const [hotelId, setHotelId] = useState(0);
   const getHotels = () => {
     setLoading(true);
     HotelService.getAllWithImages()
@@ -71,11 +73,44 @@ const HotelsPage = ({ navigation }) => {
       });
   }
 
+  const deleteHotel = (hotelId: number) => {
+    setLoading(true);
+    HotelService.removeById(hotelId)
+      .then((response) => {
+        getHotels();
+        toast.show(response.data.message, {
+          type: "custom_type",
+          placement: "center",
+          animationType: "zoom-in",
+          swipeEnabled: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
   const handleHotelStatusChange = (hotelId: number) => {
     changeHotelStatus(hotelId);
   }
 
+  const handleDeletePress = (hotelId) => {
+    setHotelId(hotelId);
+    setConfirmationModalVisible(true);
+  };
 
+  const handleConfirmDelete = () => {
+    console.log("dasdsa",hotelId)
+    setConfirmationModalVisible(false);
+    deleteHotel(hotelId);
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModalVisible(false);
+  };
   const renderHotelCard = (hotel: HotelDetailDto) => {
     return (
       <>
@@ -114,12 +149,19 @@ const HotelsPage = ({ navigation }) => {
               <Text style={styles.userCardBodyButtonText}>Detay Sayfasına Git</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.userCardBodyButton, borderBottomRightRadius: 10,
+              ...styles.userCardBodyButton,
             }}
               onPress={() => handleHotelStatusChange(hotel.id)}
 
             >
               <Text style={styles.userCardBodyButtonText}>{hotel.status ? "Kullanım Dışı Yap" : "Aktif Yap"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.8} style={{
+              ...styles.userCardBodyButton, borderBottomRightRadius: 10,
+            }}
+              onPress={() => handleDeletePress(hotel.id)}
+            >
+              <Text style={styles.userCardBodyButtonText}>Oteli Sil</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -148,11 +190,16 @@ const HotelsPage = ({ navigation }) => {
                 keyExtractor={(hotel) => hotel.id.toString()}
                 showsVerticalScrollIndicator={false}
                 style={styles.hotelContainer} />
+              <ModalComponent isVisible={isConfirmationModalVisible}
+                onCancel={handleCancelDelete} onConfirm={handleConfirmDelete}
+                modalText="Oteli silmek istediğiniziden emin misiniz? Değişikler geri alınamaz."
+                onConfirmText="Sil"
+                onCancelText="İptal" />
             </View> :
             <>
               <View style={styles.errorContainer} >
                 <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
-                <Text style={styles.errorContainerText}>Rezervasyon kaydı bulunamadı.</Text>
+                <Text style={styles.errorContainerText}>Herhangi bir otel bulunamadı.</Text>
               </View>
             </>}
         </>}

@@ -7,13 +7,15 @@ import { useCallback, useEffect, useState } from "react";
 import { useToast } from "react-native-toast-notifications";
 import { useFocusEffect } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import ModalComponent from './../../../components/ModalComponent/ModalComponent';
 
 const RoomsPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState<RoomDetailDto[]>(null);
   const toast = useToast();
   const [searchText, setSearchText] = useState("");
-
+  const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false);
+  const [roomId, setRoomId] = useState(0);
   const getRooms = () => {
     setLoading(true);
     RoomService.getRoomsWithImages()
@@ -71,11 +73,43 @@ const RoomsPage = ({ navigation }) => {
       });
   }
 
+  const deleteRoom = (roomId: number) => {
+    setLoading(true);
+    RoomService.removeById(roomId)
+      .then((response) => {
+        getRooms();
+        toast.show(response.data.message, {
+          type: "custom_type",
+          placement: "center",
+          animationType: "zoom-in",
+          swipeEnabled: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
   const handleRoomStatusChange = (roomId: number) => {
     changeRoomStatus(roomId);
   }
 
+  const handleDeletePress = (roomId) => {
+    setRoomId(roomId);
+    setConfirmationModalVisible(true);
+  };
 
+  const handleConfirmDelete = () => {
+    setConfirmationModalVisible(false);
+    deleteRoom(roomId);
+  };
+
+  const handleCancelDelete = () => {
+    setConfirmationModalVisible(false);
+  };
   const renderRoomCard = (room: RoomDetailDto) => {
     return (
       <>
@@ -101,21 +135,29 @@ const RoomsPage = ({ navigation }) => {
             </View>
           </View>
 
-          <View style={styles.userCardBodyButtonContainer}>
+          <View style={styles.roomCardBodyButtonContainer}>
             <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.userCardBodyButton, borderBottomLeftRadius: 10,
+              ...styles.roomCardBodyButton, borderBottomLeftRadius: 10,
             }}
               onPress={() => navigateToRoomDetailPage(room.id, room.name)}
             >
-              <Text style={styles.userCardBodyButtonText}>Detay Sayfasına Git</Text>
+              <Text style={styles.roomCardBodyButtonText}>Detay Sayfasına Git</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.userCardBodyButton, borderBottomRightRadius: 10,
+              ...styles.roomCardBodyButton,
             }}
               onPress={() => handleRoomStatusChange(room.id)}
 
             >
-              <Text style={styles.userCardBodyButtonText}>{room.status ? "Kullanım Dışı Yap" : "Aktif Yap"}</Text>
+              <Text style={styles.roomCardBodyButtonText}>{room.status ? "Kullanım Dışı Yap" : "Aktif Yap"}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.8} style={{
+              ...styles.roomCardBodyButton, borderBottomRightRadius: 10,
+            }}
+              onPress={() => handleDeletePress(room.id)}
+
+            >
+              <Text style={styles.roomCardBodyButtonText}>Odayı Sil</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -144,6 +186,11 @@ const RoomsPage = ({ navigation }) => {
                 keyExtractor={(room) => room.id.toString()}
                 showsVerticalScrollIndicator={false}
                 style={styles.roomContainer} />
+              <ModalComponent isVisible={isConfirmationModalVisible}
+                onCancel={handleCancelDelete} onConfirm={handleConfirmDelete}
+                modalText="Odayı silmek istediğiniziden emin misiniz? Değişikler geri alınamaz."
+                onConfirmText="Sil"
+                onCancelText="İptal" />
             </View> :
             <>
               <View style={styles.errorContainer} >
