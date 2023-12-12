@@ -35,17 +35,22 @@ const AdminPanelPage = ({ navigation }) => {
       id: '3',
       title: 'Kullanıcılar',
       icon: 'account',
-      subMenus: [
-        { id: '21', title: 'Görüntüle', icon: 'eye', navigatePage: "UsersPage", onPress: null },
-      ],
+      navigatePage: "UsersPage",
+      subMenus: null
     },
     {
       id: '4',
       title: 'Rezervasyonlar',
       icon: 'calendar',
-      subMenus: [
-        { id: '21', title: 'Görüntüle', icon: 'eye', navigatePage: "ReservationsPage", onPress: null },
-      ],
+      navigatePage: "ReservationsPage",
+      subMenus: null
+    },
+    {
+      id: '5',
+      title: 'Ödemeler',
+      icon: 'currency-try',
+      navigatePage: "PaymentsPage",
+      subMenus: null
     },
   ];
 

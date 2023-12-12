@@ -1,4 +1,4 @@
 export enum PaymentStatus {
-    Paid = 'Paid',
-    Canceled = 'Canceled'
+    Paid,
+    Canceled 
 }

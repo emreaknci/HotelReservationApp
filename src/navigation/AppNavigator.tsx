@@ -29,6 +29,7 @@ import AddRoomPage from './../pages/AdminPanelStackPages/AddRoomPage/AddRoomPage
 import EditHotelPage from './../pages/AdminPanelStackPages/EditHotelPage/EditHotelPage';
 import EditRoomPage from './../pages/AdminPanelStackPages/EditRoomPage/EditRoomPage';
 import ReservationsPage from './../pages/AdminPanelStackPages/ReservationsPage/ReservationsPage';
+import PaymentsPage from './../pages/AdminPanelStackPages/PaymentsPage/PaymentsPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -142,6 +143,12 @@ const AdminPanelStack = () => {
       <Stack.Screen name="ReservationsPage" component={ReservationsPage} options={
         {
           headerShown: true, title: "Rezervasyonlar", headerTintColor: colors.text,
+          headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+        }
+      } />
+      <Stack.Screen name="PaymentsPage" component={PaymentsPage} options={
+        {
+          headerShown: true, title: "Ödemeler", headerTintColor: colors.text,
           headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
         }
       } />

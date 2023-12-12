@@ -17,6 +17,7 @@
     "@react-navigation/stack": "^6.3.20",
     "@types/react": "^18.2.39",
     "axios": "^1.6.2",
+    "date-fns": "^2.30.0",
     "expo": "~49.0.15",
     "expo-image-picker": "~14.3.2",
     "expo-status-bar": "~1.6.0",
