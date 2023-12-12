@@ -16,13 +16,14 @@ const HotelDetailPage = ({ route, navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const getHotelWithImages = () => {
-    HotelService.getByIdWithImages(id)
+    HotelService.getByIdWithImagesAndRooms(id)
       .then(response => {
         response.data.data.rooms = response.data.data.rooms && response.data.data.rooms.filter(room => room.status === true);
         setHotel(response.data.data)
         setHotelCarouselItems(response.data.data.images.map((image) => {
           return { image: image }
         }))
+        console.log(response.data.data)
       })
       .catch(error => console.log(error.response));
   }

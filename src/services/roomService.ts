@@ -16,8 +16,10 @@ const RoomService = {
         return BaseService.get(`/room/change-room-status?roomId=${roomId}`);
     },
     addRoom: async (formData:FormData): Promise<AxiosResponse<Result<Room>>> => {
-        console.log("gelen formdata",formData);
         return BaseService.post(`/room`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+    },
+    updateRoom: async (formData: FormData): Promise<AxiosResponse<Result<Room>>> => {
+        return BaseService.put(`/room`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     },
     removeById: async (id: number): Promise<AxiosResponse<Result<Room>>> => {
         return BaseService.delete(`/room/removeById/${id}`);

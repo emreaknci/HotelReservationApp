@@ -52,6 +52,9 @@ const HotelsPage = ({ navigation }) => {
   const navigateToHotelDetailPage = (hotelId: number, hotelName: string) => {
     navigation.navigate("HotelDetailPage", { id: hotelId, title: hotelName });
   }
+  const navigateToEditHotelPage = (hotelId: number) => {
+    navigation.navigate("EditHotelPage", { id: hotelId });
+  }
 
   const changeHotelStatus = (hotelId: number) => {
     setLoading(true);
@@ -103,7 +106,7 @@ const HotelsPage = ({ navigation }) => {
   };
 
   const handleConfirmDelete = () => {
-    console.log("dasdsa",hotelId)
+    console.log("dasdsa", hotelId)
     setConfirmationModalVisible(false);
     deleteHotel(hotelId);
   };
@@ -135,33 +138,33 @@ const HotelsPage = ({ navigation }) => {
               </View>
               <View style={styles.hotelCardBody}>
                 <Text style={styles.hotelCardBodyText}>Durum:</Text>
-                <Text style={styles.hotelCardBodyText}>{hotel.status ? "Aktif" : "Kullanım Dışı"}</Text>
+                <Text style={styles.hotelCardBodyText} onPress={() => handleHotelStatusChange(hotel.id)}
+                >{hotel.status ? "Aktif (Kullanım Dışı Yap)" : "Kullanım Dışı (Aktif Yap)"}
+                </Text>
+
               </View>
             </View>
           </View>
 
           <View style={styles.userCardBodyButtonContainer}>
-            <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.userCardBodyButton, borderBottomLeftRadius: 10,
-            }}
+            <TouchableOpacity activeOpacity={0.8}
+              style={{ ...styles.userCardBodyButton, borderBottomLeftRadius: 10, }}
               onPress={() => navigateToHotelDetailPage(hotel.id, hotel.name)}
             >
               <Text style={styles.userCardBodyButtonText}>Detay Sayfasına Git</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.userCardBodyButton,
-            }}
-              onPress={() => handleHotelStatusChange(hotel.id)}
 
+            <TouchableOpacity activeOpacity={0.8}
+              style={{ ...styles.userCardBodyButton, }}
+              onPress={() => navigateToEditHotelPage(hotel.id)}
             >
-              <Text style={styles.userCardBodyButtonText}>{hotel.status ? "Kullanım Dışı Yap" : "Aktif Yap"}</Text>
+              <Text style={styles.userCardBodyButtonText}>Bilgileri Düzenle</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.userCardBodyButton, borderBottomRightRadius: 10,
-            }}
+            <TouchableOpacity activeOpacity={0.8}
+              style={{ ...styles.userCardBodyButton, borderBottomRightRadius: 10, }}
               onPress={() => handleDeletePress(hotel.id)}
             >
-              <Text style={styles.userCardBodyButtonText}>Oteli Sil</Text>
+              <Text style={styles.userCardBodyButtonText}>Otel Bilgilerini Sil</Text>
             </TouchableOpacity>
           </View>
         </View>

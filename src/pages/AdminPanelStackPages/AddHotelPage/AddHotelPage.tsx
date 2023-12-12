@@ -127,7 +127,7 @@ const AddHotelPage = ({ navigation }) => {
     formData.append('TotalRoomCount', hotel.totalRoomCount.toString());
     formData.append('Website', hotel.website);
 
-    await HotelService.addRoom(formData)
+    await HotelService.addHotel(formData)
       .then((res) => {
         toast.show(res.data.message, {
           type: "custom_type",

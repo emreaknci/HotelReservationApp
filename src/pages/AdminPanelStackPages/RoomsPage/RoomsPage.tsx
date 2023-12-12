@@ -52,7 +52,9 @@ const RoomsPage = ({ navigation }) => {
   const navigateToRoomDetailPage = (roomId: number, roomName: string) => {
     navigation.navigate("RoomDetailPage", { id: roomId, title: roomName });
   }
-
+  const navigateToEditRoomPage = (roomId: number) => {
+    navigation.navigate("EditRoomPage", { id: roomId });
+  }
   const changeRoomStatus = (roomId: number) => {
     setLoading(true);
     RoomService.changeRoomStatus(roomId)
@@ -130,37 +132,34 @@ const RoomsPage = ({ navigation }) => {
               </View>
               <View style={styles.roomCardBody}>
                 <Text style={styles.roomCardBodyText}>Durum:</Text>
-                <Text style={styles.roomCardBodyText}>{room.status ? "Aktif" : "Kullanım Dışı"}</Text>
+                <Text style={styles.roomCardBodyText} onPress={() => handleRoomStatusChange(room.id)}>
+                  {room.status ? "Aktif (Kullanım Dışı Yap)" : "Kullanım Dışı (Aktif Yap)"}
+                </Text>
               </View>
             </View>
           </View>
 
           <View style={styles.roomCardBodyButtonContainer}>
-            <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.roomCardBodyButton, borderBottomLeftRadius: 10,
-            }}
+            <TouchableOpacity activeOpacity={0.8}
+              style={{ ...styles.roomCardBodyButton, borderBottomLeftRadius: 10, }}
               onPress={() => navigateToRoomDetailPage(room.id, room.name)}
             >
               <Text style={styles.roomCardBodyButtonText}>Detay Sayfasına Git</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.roomCardBodyButton,
-            }}
-              onPress={() => handleRoomStatusChange(room.id)}
-
+            <TouchableOpacity activeOpacity={0.8}
+              style={{ ...styles.roomCardBodyButton, }}
+              onPress={() => navigateToEditRoomPage(room.id)}
             >
-              <Text style={styles.roomCardBodyButtonText}>{room.status ? "Kullanım Dışı Yap" : "Aktif Yap"}</Text>
+              <Text style={styles.roomCardBodyButtonText}>Bilgileri Düzenle</Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={{
-              ...styles.roomCardBodyButton, borderBottomRightRadius: 10,
-            }}
+            <TouchableOpacity activeOpacity={0.8}
+              style={{ ...styles.roomCardBodyButton, borderBottomRightRadius: 10, }}
               onPress={() => handleDeletePress(room.id)}
-
             >
-              <Text style={styles.roomCardBodyButtonText}>Odayı Sil</Text>
+              <Text style={styles.roomCardBodyButtonText}>Oda Bilgilerini Sil</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View >
       </>
     )
   }

@@ -10,9 +10,10 @@ interface Props {
   btnTextStyle?: any;
   iconStyle?: any;
   onImagesSelected?: (files: ImagePicker.ImagePickerAsset[]) => void;
+  selectionLimit?: number;
 }
 
-export default function ImagePickerComponent({ btnContainerStyle, btnStyle, btnTextStyle, iconStyle, onImagesSelected }: Props) {
+export default function ImagePickerComponent({ btnContainerStyle, btnStyle, btnTextStyle, iconStyle, onImagesSelected, selectionLimit = 5 }: Props) {
   const [carouselItems, setCarouselItems] = useState([]);
 
   const pickImage = async () => {
@@ -22,8 +23,7 @@ export default function ImagePickerComponent({ btnContainerStyle, btnStyle, btnT
       aspect: [4, 3],
       quality: 1,
       allowsMultipleSelection: true,
-      selectionLimit: 5,
-
+      selectionLimit: selectionLimit,
     });
 
     if (!result.canceled) {

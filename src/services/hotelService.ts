@@ -14,19 +14,26 @@ const HotelService = {
     getByIdWithImages: (id: number): Promise<AxiosResponse<Result<HotelDetailDto>>> => {
         return BaseService.get(`/hotel/get-by-id-with-images/${id}`);
     },
+    getByIdWithImagesAndRooms: (id: number): Promise<AxiosResponse<Result<HotelDetailDto>>> => {
+        return BaseService.get(`/hotel/get-by-id-with-images-and-rooms/${id}`);
+    },
     changeHotelStatus: async (hotelId: number): Promise<AxiosResponse<Result<boolean>>> => {
         return BaseService.get(`/hotel/change-hotel-status?hotelId=${hotelId}`);
     },
     getAllForDropdown: (): Promise<AxiosResponse<Result<HotelDto[]>>> => {
         return BaseService.get(`/hotel/get-all-for-dropdown`);
     },
-    addRoom: async (formData: FormData): Promise<AxiosResponse<Result<Hotel>>> => {
-        console.log("gelen formdata", formData);
+    addHotel: async (formData: FormData): Promise<AxiosResponse<Result<Hotel>>> => {
         return BaseService.post(`/hotel`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
+    },
+    updateHotel: async (formData: FormData): Promise<AxiosResponse<Result<Hotel>>> => {
+        return BaseService.put(`/hotel`, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
     },
     removeById: async (id: number): Promise<AxiosResponse<Result<Hotel>>> => {
         return BaseService.delete(`/hotel/removeById/${id}`);
-    }
+    },
+
+
 }
 
 export default HotelService;

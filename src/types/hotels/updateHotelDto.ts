@@ -8,7 +8,8 @@ export default interface UpdateHotelDto {
     email?: string | null;
     website?: string | null;
     description?: string | null;
-    imageUrl?: string | null;
     star?: number | null;
     totalRoomCount?: number | null;
+    newImages?: Blob[] | null;
+    imagePathsToDelete?: string[] | null;
 }
