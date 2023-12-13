@@ -1,4 +1,3 @@
-
 import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
 import styles from "./PaymentsPage.style";
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -10,8 +9,6 @@ import PaymentService from './../../../services/paymentService';
 import { PaymentStatus } from '../../../enums/paymentStatus';
 import PaymentDto from './../../../types/payments/paymentDto';
 import { useToast } from "react-native-toast-notifications";
-import { format } from 'date-fns';
-import { tr } from "date-fns/locale";
 
 const PaymentsPage = () => {
   const toast = useToast();
@@ -84,7 +81,7 @@ const PaymentsPage = () => {
               Başlangıç Tarihi:
             </Text>
             <Text style={styles.buttonContainerText}>
-              Çıkış Tarihi:
+              Bitiş Tarihi:
             </Text>
           </View>
 

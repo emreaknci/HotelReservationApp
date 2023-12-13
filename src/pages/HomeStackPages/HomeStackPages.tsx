@@ -1,19 +1,19 @@
 
-import { View, Text, ScrollView, RefreshControl } from "react-native";
+import { View, Text, ScrollView, RefreshControl, ActivityIndicator } from "react-native";
 import styles from "./HomeStackPages.style";
 import hotelService from '../../services/hotelService';
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CarouselComponent from "../../components/CarouselComponent/CarouselComponent";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
+import { useFocusEffect } from "@react-navigation/native";
 const HomePage = ({ navigation }) => {
-
   const [carouselItems, setCarouselItems] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
 
   const getHotelWithImages = () => {
     hotelService.getAllWithImages()
       .then((res) => {
-        var active= res.data.data.filter((item) => item.status == true);
+        var active = res.data.data.filter((item) => item.status == true);
         const carouselItems = active.map((item) => {
           return {
             id: item.id,
@@ -25,6 +25,7 @@ const HomePage = ({ navigation }) => {
       }).catch((err) => {
         console.log(err);
       })
+
   }
 
   useEffect(() => {
@@ -40,18 +41,33 @@ const HomePage = ({ navigation }) => {
     }, 1000);
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      onRefresh()
+    }, [])
+  );
 
   return (
 
     <>
       <HeaderComponent />
-      <ScrollView  showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false} refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}  />
-      }>
-        <View style={{ ...styles.container }}>
-          <CarouselComponent data={carouselItems} navigation={navigation} navigatePage={"HotelDetailPage"} />
-        </View>
-      </ScrollView>
+      {refreshing
+        ? <>
+          <View style={styles.errorContainer} >
+            <ActivityIndicator size="large" color="#de2d5f" />
+            <Text style={styles.errorContainerText}>Yükleniyor...</Text>
+          </View>
+        </>
+        : <>
+          <>
+            <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} showsVerticalScrollIndicator={false}>
+              <View style={{ ...styles.container }}>
+                {carouselItems && <CarouselComponent data={carouselItems} navigation={navigation} navigatePage={"HotelDetailPage"} />}
+              </View>
+            </ScrollView>
+          </>
+        </>
+      }
     </>
   );
 }

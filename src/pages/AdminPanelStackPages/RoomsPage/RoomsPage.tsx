@@ -8,19 +8,55 @@ import { useToast } from "react-native-toast-notifications";
 import { useFocusEffect } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import ModalComponent from './../../../components/ModalComponent/ModalComponent';
+import SelectDropdown from "react-native-select-dropdown";
+import HotelDto from './../../../types/hotels/hotelDto';
+import HotelService from './../../../services/hotelService';
 
 const RoomsPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [rooms, setRooms] = useState<RoomDetailDto[]>(null);
+  const [filteredRooms, setFilteredRooms] = useState<RoomDetailDto[]>(null);
   const toast = useToast();
   const [searchText, setSearchText] = useState("");
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false);
   const [roomId, setRoomId] = useState(0);
-  const getRooms = () => {
+  const [hotelList, setHotelList] = useState<HotelDto[]>(null);
+  const [selectedHotelId, setSelectedHotelId] = useState<number>(0);
+  const getHotels = () => {
+    setLoading(true);
+    HotelService.getAllForDropdown()
+      .then((response) => {
+        setHotelList(response.data.data)
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  const getRoomsByHotelId = (hotelId) => {
+    setLoading(true);
+    HotelService.getByIdWithImagesAndRooms(hotelId)
+      .then((response) => {
+        setRooms(response.data.data.rooms)
+        setFilteredRooms(response.data.data.rooms)
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  const getAllRooms = () => {
     setLoading(true);
     RoomService.getRoomsWithImages()
       .then((response) => {
         setRooms(response.data.data)
+        setFilteredRooms(response.data.data)
       })
       .catch((err) => {
         console.log(err.response.data)
@@ -32,21 +68,24 @@ const RoomsPage = ({ navigation }) => {
 
   useFocusEffect(
     useCallback(() => {
-      getRooms();
+      getHotels();
     }, [])
   );
   useEffect(() => {
     if (!rooms) return;
     if (searchText === "") {
-      getRooms();
+      setFilteredRooms(rooms);
       return;
     }
 
-    const filteredRooms = rooms.filter(room =>
-      room.name.toLowerCase().includes(searchText.toLowerCase())
-    );
+    const filteredRooms = rooms.filter((room) => {
+      const roomName = room.name.toLowerCase();
+      const searchTextLower = searchText.toLowerCase();
+      return roomName.includes(searchTextLower);
+    });
 
-    setRooms(filteredRooms);
+    setFilteredRooms(filteredRooms);
+
   }, [searchText]);
 
   const navigateToRoomDetailPage = (roomId: number, roomName: string) => {
@@ -59,7 +98,7 @@ const RoomsPage = ({ navigation }) => {
     setLoading(true);
     RoomService.changeRoomStatus(roomId)
       .then((response) => {
-        getRooms();
+        getRoomsByHotelId(selectedHotelId);
         toast.show(response.data.message, {
           type: "custom_type",
           placement: "center",
@@ -79,7 +118,7 @@ const RoomsPage = ({ navigation }) => {
     setLoading(true);
     RoomService.removeById(roomId)
       .then((response) => {
-        getRooms();
+        getRoomsByHotelId(selectedHotelId);
         toast.show(response.data.message, {
           type: "custom_type",
           placement: "center",
@@ -112,6 +151,43 @@ const RoomsPage = ({ navigation }) => {
   const handleCancelDelete = () => {
     setConfirmationModalVisible(false);
   };
+  const handleSelectedHotel = (selectedItem, index) => {
+    console.log(hotelList[index].id, selectedItem, index);
+    if (index === 0)
+      setSelectedHotelId(0);
+    else
+      setSelectedHotelId(hotelList[index].id);
+
+  }
+  const renderInput = () => {
+    return (
+      <>
+        {hotelList &&
+          <View style={styles.buttonContainer}>
+            <SelectDropdown
+              data={['Tümünü Getir', ...hotelList.map((hotel) => hotel.name)]}
+              defaultButtonText="Otel Seçiniz"
+              onSelect={(selectedItem, index) => {
+                handleSelectedHotel(selectedItem, index)
+              }}
+              dropdownIconPosition='right'
+              renderDropdownIcon={() => <MaterialCommunityIcons name="chevron-down" style={styles.inputIcon} />}
+              buttonStyle={{ ...styles.input }}
+            />
+            <TouchableOpacity style={{ ...styles.searchButton }} onPress={() => {
+              if (selectedHotelId === 0)
+                getAllRooms();
+              else
+                getRoomsByHotelId(selectedHotelId);
+            }}>
+              <Text style={styles.buttonText}>Ara</Text>
+            </TouchableOpacity>
+          </View>}
+      </>
+    )
+  }
+
+
   const renderRoomCard = (room: RoomDetailDto) => {
     return (
       <>
@@ -173,30 +249,38 @@ const RoomsPage = ({ navigation }) => {
           </View>
         </>
         : <>
-          {rooms ?
-            <View style={styles.container}>
-              <View style={styles.searchContainer}>
-                <MaterialCommunityIcons name="magnify" style={styles.searchIcon} />
-                <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Müşteri Adına Göre Ara..." />
-              </View>
-              <FlatList
-                data={rooms}
-                renderItem={({ item: room }) => (renderRoomCard(room))}
-                keyExtractor={(room) => room.id.toString()}
-                showsVerticalScrollIndicator={false}
-                style={styles.roomContainer} />
-              <ModalComponent isVisible={isConfirmationModalVisible}
-                onCancel={handleCancelDelete} onConfirm={handleConfirmDelete}
-                modalText="Odayı silmek istediğiniziden emin misiniz? Değişikler geri alınamaz."
-                onConfirmText="Sil"
-                onCancelText="İptal" />
-            </View> :
-            <>
-              <View style={styles.errorContainer} >
-                <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
-                <Text style={styles.errorContainerText}>Rezervasyon kaydı bulunamadı.</Text>
-              </View>
-            </>}
+          <View style={styles.container}>
+            {renderInput()}
+            {rooms ?
+              <>
+                <View style={styles.searchContainer}>
+                  <MaterialCommunityIcons name="magnify" style={styles.searchIcon} />
+                  <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Oda Adına Göre Ara..." />
+                </View>
+                <FlatList
+                  data={filteredRooms}
+                  renderItem={({ item: room }) => (renderRoomCard(room))}
+                  keyExtractor={(room) => room.id.toString()}
+                  showsVerticalScrollIndicator={false}
+                  style={styles.roomContainer} />
+                <ModalComponent isVisible={isConfirmationModalVisible}
+                  onCancel={handleCancelDelete} onConfirm={handleConfirmDelete}
+                  modalText="Odayı silmek istediğiniziden emin misiniz? Değişikler geri alınamaz."
+                  onConfirmText="Sil"
+                  onCancelText="İptal" />
+              </>
+              :
+              <>
+                {selectedHotelId && rooms ?
+                  <View style={styles.errorContainer} >
+                    <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
+                    <Text style={styles.errorContainerText}>Otel kaydı bulunamadı.</Text>
+                  </View> :
+                  <>
+
+                  </>}
+              </>}
+          </View>
         </>}
     </>
   );

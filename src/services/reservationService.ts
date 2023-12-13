@@ -32,6 +32,20 @@ const ReservationService = {
     cancelReservation: async (reservationId: number): Promise<AxiosResponse<Result<Reservation>>> => {
         return BaseService.get(`/reservations/cancel-reservation?reservationId=${reservationId}`);
     },
+    getAllInDateRange: (startDate?, endDate?, status?): Promise<AxiosResponse<Result<ReservationListDto[]>>> => {
+        const queryParams = { startDate: null, endDate: null, status: null, };
+
+        if (startDate !== undefined && startDate !== null)
+            queryParams.startDate = startDate;
+
+        if (endDate !== undefined && endDate !== null)
+            queryParams.endDate = endDate;
+
+        if (status !== undefined && status !== null)
+            queryParams.status = status;
+
+        return BaseService.get('/reservations/get-all-in-date-range', { params: queryParams });
+    },
 
 }
 

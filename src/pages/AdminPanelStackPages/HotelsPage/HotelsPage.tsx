@@ -12,6 +12,7 @@ import ModalComponent from './../../../components/ModalComponent/ModalComponent'
 const HotelsPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [hotels, setHotels] = useState<HotelDetailDto[]>(null);
+  const [filteredHotels, setFilteredHotels] = useState<HotelDetailDto[]>(null);
   const toast = useToast();
   const [searchText, setSearchText] = useState("");
   const [isConfirmationModalVisible, setConfirmationModalVisible] = useState(false);
@@ -21,6 +22,7 @@ const HotelsPage = ({ navigation }) => {
     HotelService.getAllWithImages()
       .then((response) => {
         setHotels(response.data.data)
+        setFilteredHotels(response.data.data)
       })
       .catch((err) => {
         console.log(err.response.data)
@@ -38,7 +40,7 @@ const HotelsPage = ({ navigation }) => {
   useEffect(() => {
     if (!hotels) return;
     if (searchText === "") {
-      getHotels();
+      setFilteredHotels(hotels);
       return;
     }
 
@@ -46,7 +48,7 @@ const HotelsPage = ({ navigation }) => {
       hotel.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
-    setHotels(filteredHotels);
+    setFilteredHotels(filteredHotels);
   }, [searchText]);
 
   const navigateToHotelDetailPage = (hotelId: number, hotelName: string) => {
@@ -188,7 +190,7 @@ const HotelsPage = ({ navigation }) => {
                 <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Otel Adına Göre Ara..." />
               </View>
               <FlatList
-                data={hotels}
+                data={filteredHotels}
                 renderItem={({ item: hotel }) => (renderHotelCard(hotel))}
                 keyExtractor={(hotel) => hotel.id.toString()}
                 showsVerticalScrollIndicator={false}
@@ -202,7 +204,7 @@ const HotelsPage = ({ navigation }) => {
             <>
               <View style={styles.errorContainer} >
                 <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
-                <Text style={styles.errorContainerText}>Herhangi bir otel bulunamadı.</Text>
+                <Text style={styles.errorContainerText}>Otel kaydı bulunamadı.</Text>
               </View>
             </>}
         </>}

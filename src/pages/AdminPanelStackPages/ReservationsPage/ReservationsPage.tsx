@@ -8,21 +8,83 @@ import { useCallback, useEffect, useState } from "react";
 import ReservationListDto from './../../../types/reservations/reservationListDto';
 import colors from "../../../../colors"
 import { useToast } from "react-native-toast-notifications";
+import SelectDropdown from "react-native-select-dropdown";
+import DateTimePicker from '@react-native-community/datetimepicker';
 const ReservationsPage = () => {
 
   const [loading, setLoading] = useState(false);
   const [reservations, setReservations] = useState<ReservationListDto[]>(null);
+  const [filteredReservations, setFilteredReservations] = useState<ReservationListDto[]>(null);
   const toast = useToast();
   const [searchText, setSearchText] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [showStartDate, setStartDateShow] = useState(false);
+  const [endDate, setEndDate] = useState(new Date());
+  const [showEndDate, setEndDateShow] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState<string[]>([
+    'Tümü',
+    'Ödenenler',
+    'İptal Edilenler'
+  ]);
+  const [selectedPaymentStatus, setSelectedPaymentStatus] = useState<string>('Tümü');
 
+  const setInitialState = () => {
+    setSearchText("");
+    setSelectedPaymentStatus("Tümü");
+    setStartDate(new Date());
+    setEndDate(new Date());
+    setReservations(null);
+    setFilteredReservations(null);
+  }
+  const onStartDateChange = (selectedDate) => {
+    const currentDate = new Date(selectedDate.nativeEvent.timestamp) || startDate;
+    setStartDateShow(false);
+    setStartDate(currentDate);
+  };
+  const onEndDateChange = (selectedDate) => {
+    const currentDate = new Date(selectedDate.nativeEvent.timestamp) || endDate;
+    setEndDateShow(false);
+    setEndDate(currentDate);
+  };
+  const handleSelectedPaymentStatus = (selectedItem, index) => {
+    setSelectedPaymentStatus(selectedItem);
+    console.log(selectedItem, index)
+  }
   const getReservations = () => {
     setLoading(true);
     ReservationService.getAllWithDetails()
       .then((response) => {
         setReservations(response.data.data)
+        setFilteredReservations(response.data.data)
       })
       .catch((err) => {
         console.log(err.response.data)
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }
+
+  const getReservationsInDateRange = () => {
+    setLoading(true);
+
+    let status = null;
+    if (selectedPaymentStatus === "Ödenenler")
+      status = "Paid";
+    else if (selectedPaymentStatus === "İptal Edilenler")
+      status = "Canceled";
+    else
+      status = null;
+
+    ReservationService.getAllInDateRange(startDate, endDate, status)
+      .then((response) => {
+        setReservations(response.data.data)
+        setFilteredReservations(response.data.data)
+      })
+      .catch((err) => {
+        console.log(err.response.data)
+        setInitialState()
+
       })
       .finally(() => {
         setLoading(false);
@@ -52,26 +114,87 @@ const ReservationsPage = () => {
   }
   useFocusEffect(
     useCallback(() => {
-      getReservations();
+      setInitialState()
     }, [])
   );
   useEffect(() => {
     if (!reservations) return;
     if (searchText === "") {
-      getReservations();
+      setFilteredReservations(reservations);
       return;
     }
 
     const filteredReservations = reservations.filter(reservation =>
       reservation.customerFullName.toLowerCase().includes(searchText.toLowerCase())
     );
-
-    setReservations(filteredReservations);
-    console.log(searchText)
-    console.log(filteredReservations)
+    setFilteredReservations(filteredReservations);
   }, [searchText]);
 
+  const renderInput = () => {
+    return (
+      <>
+        <View style={styles.buttonContainer}>
+          <View style={styles.buttonContainerRow}>
+            <Text style={styles.buttonContainerText}>
+              Başlangıç Tarihi:
+            </Text>
+            <Text style={styles.buttonContainerText}>
+              Bitiş Tarihi:
+            </Text>
+          </View>
 
+          <View style={styles.buttonContainerRow}>
+
+            <Text style={styles.buttonContainerText}>
+              {startDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </Text>
+
+            <Text style={styles.buttonContainerText}>
+              {endDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}
+            </Text>
+          </View>
+          <View style={styles.buttonContainerRow}>
+            <TouchableOpacity style={styles.button} onPress={() => setStartDateShow(true)}>
+              <Text style={styles.buttonText}>Başlangıç Tarihi</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button} onPress={() => setEndDateShow(true)}>
+              <Text style={styles.buttonText}>Bitiş Tarihi</Text>
+            </TouchableOpacity>
+          </View>
+          <SelectDropdown
+            data={paymentStatus}
+            defaultButtonText="Ödeme Durumu"
+            onSelect={(selectedItem, index) => {
+              handleSelectedPaymentStatus(selectedItem, index)
+            }}
+            dropdownIconPosition='right'
+            renderDropdownIcon={() => <MaterialCommunityIcons name="chevron-down" style={styles.inputIcon} />}
+            buttonStyle={{ ...styles.input }}
+          />
+          <TouchableOpacity style={{ ...styles.searchButton }} onPress={() => { getReservationsInDateRange() }}>
+            <Text style={styles.buttonText}>Ara</Text>
+          </TouchableOpacity>
+        </View>
+        {showStartDate && <DateTimePicker
+          locale="tr-TR"
+          value={startDate}
+          onChange={onStartDateChange}
+          display="spinner"
+          positiveButton={{ label: 'Seç', textColor: colors.primary }}
+          negativeButton={{ label: 'İptal', textColor: colors.primary }}
+        />}
+        {showEndDate && <DateTimePicker
+          locale="tr-TR"
+          value={endDate}
+          onChange={onEndDateChange}
+          display="spinner"
+          positiveButton={{ label: 'Seç', textColor: colors.primary }}
+          negativeButton={{ label: 'İptal', textColor: colors.primary }}
+        />}
+      </>
+    )
+  }
   const renderReservationCard = (reservation: ReservationListDto) => {
     return (
       <>
@@ -149,25 +272,30 @@ const ReservationsPage = () => {
           </View>
         </>
         : <>
-          {reservations ?
-            <View style={styles.container}>
-              <View style={styles.searchContainer}>
-                <MaterialCommunityIcons name="magnify" style={styles.searchIcon} />
-                <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Müşteri Adına Göre Ara..." />
-              </View>
-              <FlatList
-                data={reservations}
-                renderItem={({ item: reservation }) => (renderReservationCard(reservation))}
-                keyExtractor={(reservation) => reservation.id.toString()}
-                showsVerticalScrollIndicator={false}
-                style={styles.reservationContainer} />
-            </View> :
-            <>
-              <View style={styles.errorContainer} >
-                <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
-                <Text style={styles.errorContainerText}>Rezervasyon kaydı bulunamadı.</Text>
-              </View>
-            </>}
+          <View style={styles.container}>
+            {renderInput()}
+
+            {filteredReservations ?
+              <>
+                <View style={styles.searchContainer}>
+                  <MaterialCommunityIcons name="magnify" style={styles.searchIcon} />
+                  <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Müşteri Adına Göre Ara..." />
+                </View>
+                <FlatList
+                  data={filteredReservations}
+                  renderItem={({ item: reservation }) => (renderReservationCard(reservation))}
+                  keyExtractor={(reservation) => reservation.id.toString()}
+                  showsVerticalScrollIndicator={false}
+                  style={styles.reservationContainer} />
+              </>
+              :
+              <>
+                <View style={styles.errorContainer} >
+                  <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
+                  <Text style={styles.errorContainerText}>Rezervasyon kaydı bulunamadı.</Text>
+                </View>
+              </>}
+          </View>
         </>}
     </>
   );

@@ -14,6 +14,7 @@ import { AuthContext } from './../../../context/AuthContext';
 const UsersPage = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState<AppUser[]>();
+  const [filteredUsers, setFilteredUsers] = useState<AppUser[]>();
   const toast = useToast();
   const [searchText, setSearchText] = useState("");
   const authContext = useContext(AuthContext);
@@ -22,6 +23,7 @@ const UsersPage = () => {
     UserService.getAll()
       .then((response) => {
         setUsers(response.data.data)
+        setFilteredUsers(response.data.data)
       })
       .catch((err) => {
         console.log(err.response.data)
@@ -39,14 +41,14 @@ const UsersPage = () => {
   useEffect(() => {
     if (!users) return;
     if (searchText === "") {
-      getAllUsers();
+      setFilteredUsers(users);
       return;
     }
 
     const filteredUsers = users.filter(user =>
-      (user.firstName + " " + user.lastName).toLowerCase().includes(searchText.toLowerCase())
+      (user.email).toLowerCase().includes(searchText.toLowerCase())
     );
-    setUsers(filteredUsers);
+    setFilteredUsers(filteredUsers);
   }, [searchText]);
 
   const changeUserType = (userId: number) => {
@@ -179,10 +181,10 @@ const UsersPage = () => {
             <View style={styles.container}>
               <View style={styles.searchContainer}>
                 <MaterialCommunityIcons name="magnify" style={styles.searchIcon} />
-                <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Kullanıcı Adına Göre Ara..." />
+                <TextInput style={styles.searchInput} onChangeText={(text) => setSearchText(text)} placeholder="Maile Göre Ara..." />
               </View>
               <FlatList
-                data={users}
+                data={filteredUsers}
                 renderItem={({ item: user }) => (renderUserCard(user))}
                 keyExtractor={(user) => user.id.toString()}
                 showsVerticalScrollIndicator={false}
