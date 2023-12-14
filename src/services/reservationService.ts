@@ -29,6 +29,9 @@ const ReservationService = {
     getMyCanceledReservations: (): Promise<AxiosResponse<Result<ReservationListDto[]>>> => {
         return BaseService.get("/reservations/get-current-user-canceled-reservations");
     },
+    getMyUpcomingBookings: (): Promise<AxiosResponse<Result<ReservationListDto[]>>> => {
+        return BaseService.get("/reservations/get-current-user-upcoming-bookings");
+    },
     cancelReservation: async (reservationId: number): Promise<AxiosResponse<Result<Reservation>>> => {
         return BaseService.get(`/reservations/cancel-reservation?reservationId=${reservationId}`);
     },

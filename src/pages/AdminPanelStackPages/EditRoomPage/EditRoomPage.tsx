@@ -205,7 +205,7 @@ const EditRoomPage = ({ route, navigation }) => {
           animationType: "zoom-in",
           swipeEnabled: true,
         });
-        navigation.navigate("AdminPanelStack", { screen: "RoomsPage" });
+        navigation.navigate("AdminPanelStack", { screen: "AdminRoomsPage" });
       })
       .catch((err) => {
         console.log(err)

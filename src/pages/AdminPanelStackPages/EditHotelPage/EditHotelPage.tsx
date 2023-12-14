@@ -186,7 +186,7 @@ const EditHotelPage = ({ route, navigation }) => {
           animationType: "zoom-in",
           swipeEnabled: true,
         });
-        navigation.navigate("AdminPanelStack", { screen: "HotelsPage" });
+        navigation.navigate("AdminPanelStack", { screen: "AdminHotelsPage" });
       })
       .catch((err) => {
         console.log(err)

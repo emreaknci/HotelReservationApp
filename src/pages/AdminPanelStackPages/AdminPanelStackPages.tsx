@@ -18,7 +18,7 @@ const AdminPanelPage = ({ navigation }) => {
       title: 'Oteller',
       icon: 'city-variant',
       subMenus: [
-        { id: '11', title: 'Görüntüle', icon: 'eye', navigatePage: "HotelsPage", onPress: null },
+        { id: '11', title: 'Görüntüle', icon: 'eye', navigatePage: "AdminHotelsPage", onPress: null },
         { id: '12', title: 'Ekle', icon: 'plus', navigatePage: "AddHotelPage", onPress: null },
       ],
     },
@@ -27,7 +27,7 @@ const AdminPanelPage = ({ navigation }) => {
       title: 'Odalar',
       icon: 'bed',
       subMenus: [
-        { id: '21', title: 'Görüntüle', icon: 'eye', navigatePage: "RoomsPage", onPress: null },
+        { id: '21', title: 'Görüntüle', icon: 'eye', navigatePage: "AdminRoomsPage", onPress: null },
         { id: '22', title: 'Ekle', icon: 'plus', navigatePage: "AddRoomPage", onPress: null },
       ],
     },

@@ -3,11 +3,14 @@ import Result from "src/types/result";
 import BaseService from './baseService';
 import RoomDetailDto from "src/types/rooms/roomDetailDto";
 import Room from './../types/rooms/room';
-import CreateRoomDto from './../types/rooms/createRoomDto';
+import RoomDto from './../types/rooms/roomDto';
 
 const RoomService = {
     getRoomByIdWithImages: (id: number): Promise<AxiosResponse<Result<RoomDetailDto>>> => {
         return BaseService.get(`/room/get-room-by-id-with-images/${id}`);
+    },
+    getLatestRoomsPerHotel: (roomCount=0): Promise<AxiosResponse<Result<RoomDto[]>>> => {
+        return BaseService.get(`/room/get-latest-room-per-hotel?roomCount=${roomCount}`);
     },
     getRoomsWithImages: (): Promise<AxiosResponse<Result<RoomDetailDto[]>>> => {
         return BaseService.get(`/room/get-rooms-with-images`);

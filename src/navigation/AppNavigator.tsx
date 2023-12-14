@@ -20,8 +20,8 @@ import HotelDetailPage from "../pages/HomeStackPages/HotelDetailPage/HotelDetail
 import RoomDetailPage from '..//pages/HomeStackPages/HotelDetailPage/RoomDetailPage/RoomDetailPage';
 import BookingPage from './../pages/ReservationStackPages/BookingPage/BookingPage';
 import MyReservationsPage from './../pages/ReservationStackPages/MyReservationsPage/MyReservationsPage';
-import HotelsPage from './../pages/AdminPanelStackPages/HotelsPage/HotelsPage';
-import RoomsPage from './../pages/AdminPanelStackPages/RoomsPage/RoomsPage';
+import AdminHotelsPage from './../pages/AdminPanelStackPages/HotelsPage/HotelsPage';
+import AdminRoomsPage from './../pages/AdminPanelStackPages/RoomsPage/RoomsPage';
 import UsersPage from './../pages/AdminPanelStackPages/UsersPage/UsersPage';
 import AddHotelPage from './../pages/AdminPanelStackPages/AddHotelPage/AddHotelPage';
 import AddRoomPage from './../pages/AdminPanelStackPages/AddRoomPage/AddRoomPage';
@@ -29,6 +29,8 @@ import EditHotelPage from './../pages/AdminPanelStackPages/EditHotelPage/EditHot
 import EditRoomPage from './../pages/AdminPanelStackPages/EditRoomPage/EditRoomPage';
 import ReservationsPage from './../pages/AdminPanelStackPages/ReservationsPage/ReservationsPage';
 import PaymentsPage from './../pages/AdminPanelStackPages/PaymentsPage/PaymentsPage';
+import HomeHotelsPage from './../pages/HomeStackPages/HotelsPage/HotelsPage';
+import HomeRoomsPage from './../pages/HomeStackPages/RoomsPage/RoomsPage';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -54,6 +56,19 @@ const HomeStack = () => {
             headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
           };
         }} />
+        <Stack.Screen name="HomeHotelsPage" component={HomeHotelsPage} options={({ route }) => {
+          return {
+            headerShown: true, title: "Oteller", headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+          };
+        }} />
+          <Stack.Screen name="HomeRoomsPage" component={HomeRoomsPage} options={({ route }) => {
+          return {
+            headerShown: true, title: "Odalar", headerTintColor: colors.text,
+            headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
+          };
+        }} />
+        
       </Stack.Navigator>
     </>
 
@@ -120,13 +135,13 @@ const AdminPanelStack = () => {
   return (
     <Stack.Navigator screenOptions={commonScreenOptions}>
       <Stack.Screen name="AdminPanelStackPages" component={AdminPanelStackPages} />
-      <Stack.Screen name="HotelsPage" component={HotelsPage} options={
+      <Stack.Screen name="AdminHotelsPage" component={AdminHotelsPage} options={
         {
           headerShown: true, title: "Oteller", headerTintColor: colors.text,
           headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
         }
       } />
-      <Stack.Screen name="RoomsPage" component={RoomsPage} options={
+      <Stack.Screen name="AdminRoomsPage" component={AdminRoomsPage} options={
         {
           headerShown: true, title: "Odalar", headerTintColor: colors.text,
           headerStyle: { backgroundColor: colors.primary }, headerTitleAlign: "center"
