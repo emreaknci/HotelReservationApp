@@ -127,7 +127,7 @@ const UsersPage = () => {
               </View>
               <View style={styles.userCardBody}>
                 <Text style={styles.userCardBodyText}>Üye Olma Tarihi:</Text>
-                <Text style={styles.userCardBodyText}>{user.createdDate.toLocaleString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' })}</Text>
+                <Text style={styles.userCardBodyText}>{Date.parse(user.createdDate.toString())}</Text>
               </View>
             </View>
 

@@ -158,7 +158,6 @@ const MyReservationsPage = ({ route, navigation }) => {
     )
   }
   const handleCancel = async (reservationId: number) => {
-    console.log("cancel tocuhed", reservationId)
     await ReservationService.cancelReservation(reservationId)
       .then((response) => {
           toast.show(response.data.message, {

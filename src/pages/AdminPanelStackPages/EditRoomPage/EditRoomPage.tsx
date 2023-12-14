@@ -36,12 +36,10 @@ const EditRoomPage = ({ route, navigation }) => {
 
 
   const handleSelectedHotel = (selectedItem, index) => {
-    console.log(hotels[index].id, selectedItem, index);
-    setSelectedHotelId(hotels[index].id);
-    setEditedRoom((prevData) => ({ ...prevData, hotelId: hotels[index].id }));
+    setSelectedHotelId(hotels.find((hotel) => hotel.name === selectedItem).id);
+    setEditedRoom((prevData) => ({ ...prevData, hotelId: hotels.find((hotel) => hotel.name === selectedItem).id }));
   }
   const handleSelectedRoomType = (selectedItem, index) => {
-    console.log(selectedItem, index);
     setSelectedRoomType(RoomType[selectedItem]);
     setEditedRoom((prevData) => ({ ...prevData, type: RoomType[selectedItem] as unknown as RoomType }));
   }
@@ -82,7 +80,6 @@ const EditRoomPage = ({ route, navigation }) => {
     }
   };
   useEffect(() => {
-    console.log("Selected Image Paths:", imagePathsToDelete)
     setEditedRoom((prevData) => ({ ...prevData, imagePathsToDelete: imagePathsToDelete }));
   }, [imagePathsToDelete]);
   const [errorMessages, setErrorMessages] = useState({
@@ -200,7 +197,6 @@ const EditRoomPage = ({ route, navigation }) => {
       return;
     }
     let formData = addEditedRoomToFormData(selectedImageFiles);
-    console.log(formData);
     await RoomService.updateRoom(formData)
       .then((res) => {
         toast.show(res.data.message, {
@@ -332,12 +328,12 @@ const EditRoomPage = ({ route, navigation }) => {
                 />}
                 {room?.images &&
                   <>
-                    <View style={styles.inputContainer}>
+                    {!room?.images.some(image => image.includes('no-image')) && <View style={styles.inputContainer}>
                       <MaterialCommunityIcons name="image-multiple-outline" style={styles.inputIcon} />
                       <TouchableOpacity style={styles.button} onPress={() => handleToggleVisibility()}>
                         <Text style={styles.input}>Mevcut Resimleri Gör</Text>
                       </TouchableOpacity>
-                    </View>
+                    </View>}
                     {toggleAvailableImagesVisibility &&
                       <View style={styles.imageContainer}>
                         <Text style={styles.input}>Silmek istediklerinizi işaretleyin</Text>

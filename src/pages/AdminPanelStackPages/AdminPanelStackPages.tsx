@@ -92,7 +92,6 @@ const AdminPanelPage = ({ navigation }) => {
       setOpenSubMenuId(openSubMenuId === menuItem.id ? null : menuItem.id);
     };
     if (menuItem.navigatePage) {
-      console.log(menuItem.navigatePage)
       navigation.navigate(menuItem.navigatePage);
     }
     if (menuItem.onPress) {
@@ -105,7 +104,6 @@ const AdminPanelPage = ({ navigation }) => {
       subMenu.onPress();
     }
     if (subMenu.navigatePage) {
-      console.log(subMenu.navigatePage)
       navigation.navigate(subMenu.navigatePage);
     }
   };
@@ -116,7 +114,7 @@ const AdminPanelPage = ({ navigation }) => {
 
       <View style={styles.container}>
         <View style={styles.adminInfoHeader} >
-          <Text style={styles.adminInfoHeaderText}>ADMIN: {authContext.user.fullName}</Text>
+          <Text style={styles.adminInfoHeaderText}>ADMIN: {authContext.user.email}</Text>
         </View >
         <MaterialCommunityIcons name="shield-account" style={[styles.headerIcon, { fontSize: 100 }]} />
         <FlatList

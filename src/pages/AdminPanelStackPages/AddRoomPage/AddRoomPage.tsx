@@ -51,12 +51,10 @@ const AddRoomPage = ({ navigation }) => {
   }, [room, selectedHotelId, selectedRoomType]);
 
   const handleSelectedHotel = (selectedItem, index) => {
-    console.log(hotels[index].id, selectedItem, index);
     setSelectedHotelId(hotels[index].id);
     setRoom((prevData) => ({ ...prevData, hotelId: hotels[index].id }));
   }
   const handleSelectedRoomType = (selectedItem, index) => {
-    console.log(selectedItem, index);
     setSelectedRoomType(RoomType[selectedItem]);
     setRoom((prevData) => ({ ...prevData, type: RoomType[selectedItem] as unknown as RoomType }));
   }

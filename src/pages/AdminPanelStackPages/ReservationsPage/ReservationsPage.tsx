@@ -48,7 +48,6 @@ const ReservationsPage = () => {
   };
   const handleSelectedPaymentStatus = (selectedItem, index) => {
     setSelectedPaymentStatus(selectedItem);
-    console.log(selectedItem, index)
   }
   const getReservations = () => {
     setLoading(true);

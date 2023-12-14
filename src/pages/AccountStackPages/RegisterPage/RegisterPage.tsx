@@ -41,7 +41,6 @@ const RegisterPage = ({ navigation }) => {
             setLoading(false);
             return;
         }
-        console.log("registerData: ", registerData)
         await AuthService.registerForCustomer(registerData)
             .then((res) => {
                 toast.show(res.data.message, {
@@ -63,8 +62,10 @@ const RegisterPage = ({ navigation }) => {
                     swipeEnabled: true,
                 });
                 setLoading(false);
+            })
+            .finally(() => {
+                setLoading(false);
             });
-        setLoading(false);
     };
 
     const validateRegisterData = () => {
@@ -108,8 +109,8 @@ const RegisterPage = ({ navigation }) => {
     return (
         <>
             <HeaderComponent />
-            <View style={styles.container}>
-                <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+            <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+                <View style={styles.container}>
                     {!loading ?
                         <>
                             <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
@@ -159,15 +160,16 @@ const RegisterPage = ({ navigation }) => {
 
                             <Text style={styles.footerText} onPress={navigateToLoginPage}>Zaten bir hesabın var mı?</Text>
                         </>
-                        : <View style={styles.container}>
+                        :
+                        <>
                             <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
                             <Text style={styles.title}>Kayıt Ol</Text>
                             <Text style={styles.loadingText}>Kayıt olunuyor...</Text>
-                        </View>
+                        </>
                     }
-                </ScrollView>
+                </View>
+            </ScrollView>
 
-            </View>
         </>
 
 

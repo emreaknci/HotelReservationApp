@@ -29,17 +29,16 @@ const MyAccountPage = ({ navigation }) => {
       icon: 'account-edit',
       subMenus: [
         { id: '11', title: 'Şifre Değiştir', icon: 'lock', navigatePage: "ChangePasswordPage", onPress: null },
-        { id: '12', title: 'Ad ve Soyad Değiştir', icon: 'account-circle', navigatePage: null, onPress: null },
       ],
     },
-    {
-      id: '2', title: 'Ayarlar', icon: 'cog', navigatePage: null, onPress: null, subMenus: [
-        { id: '21', title: 'Bildirim Ayarları', icon: 'bell', navigatePage: null, onPress: null },
-        { id: '22', title: 'Ses Ayarları', icon: 'volume-high', navigatePage: null, onPress: null },
-        { id: '23', title: 'Dil Ayarları', icon: 'translate', navigatePage: null, onPress: null },
-        { id: '24', title: 'Tema Değiştir', icon: 'theme-light-dark', navigatePage: null, onPress: null },
-      ],
-    },
+    // {
+    //   id: '2', title: 'Ayarlar', icon: 'cog', navigatePage: null, onPress: null, subMenus: [
+    //     { id: '21', title: 'Bildirim Ayarları', icon: 'bell', navigatePage: null, onPress: null },
+    //     { id: '22', title: 'Ses Ayarları', icon: 'volume-high', navigatePage: null, onPress: null },
+    //     { id: '23', title: 'Dil Ayarları', icon: 'translate', navigatePage: null, onPress: null },
+    //     { id: '24', title: 'Tema Değiştir', icon: 'theme-light-dark', navigatePage: null, onPress: null },
+    //   ],
+    // },
     { id: '3', title: 'Yardım', icon: 'help-circle', navigatePage: null, onPress: null },
     { id: '4', title: 'Çıkış Yap', icon: 'logout', onPress: logout },
   ];
@@ -81,7 +80,6 @@ const MyAccountPage = ({ navigation }) => {
       setOpenSubMenuId(openSubMenuId === menuItem.id ? null : menuItem.id);
     };
     if (menuItem.navigatePage) {
-      console.log(menuItem.navigatePage)
       navigation.navigate(menuItem.navigatePage);
     }
     if (menuItem.onPress) {
@@ -94,7 +92,6 @@ const MyAccountPage = ({ navigation }) => {
       subMenu.onPress();
     }
     if (subMenu.navigatePage) {
-      console.log(subMenu.navigatePage)
       navigation.navigate(subMenu.navigatePage);
     }
   };

@@ -152,12 +152,10 @@ const RoomsPage = ({ navigation }) => {
     setConfirmationModalVisible(false);
   };
   const handleSelectedHotel = (selectedItem, index) => {
-    console.log(hotelList[index].id, selectedItem, index);
     if (index === 0)
       setSelectedHotelId(0);
     else
-      setSelectedHotelId(hotelList[index].id);
-
+      setSelectedHotelId(hotelList.find((hotel) => hotel.name === selectedItem).id);
   }
   const renderInput = () => {
     return (
@@ -166,7 +164,7 @@ const RoomsPage = ({ navigation }) => {
           <View style={styles.buttonContainer}>
             <SelectDropdown
               data={['Tümünü Getir', ...hotelList.map((hotel) => hotel.name)]}
-              defaultButtonText="Otel Seçiniz"
+              defaultButtonText={selectedHotelId === 0 ? "Tümünü Getir" : hotelList.find((hotel) => hotel.id === selectedHotelId).name}
               onSelect={(selectedItem, index) => {
                 handleSelectedHotel(selectedItem, index)
               }}
@@ -271,7 +269,7 @@ const RoomsPage = ({ navigation }) => {
               </>
               :
               <>
-                {selectedHotelId && rooms ?
+                {selectedHotelId && !rooms ?
                   <View style={styles.errorContainer} >
                     <MaterialCommunityIcons name="alert-circle-outline" style={styles.errorContainerIcon} />
                     <Text style={styles.errorContainerText}>Otel kaydı bulunamadı.</Text>

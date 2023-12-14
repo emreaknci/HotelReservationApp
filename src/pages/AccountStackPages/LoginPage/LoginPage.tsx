@@ -102,8 +102,8 @@ const LoginPage = ({ navigation }) => {
   return (
     <>
       <HeaderComponent />
-      <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+        <View style={styles.container}>
           {!loading ?
             <>
               <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
@@ -134,15 +134,16 @@ const LoginPage = ({ navigation }) => {
 
               <Text style={styles.footerText} onPress={navigateToRegisterPage}>Hesabın yok mu?</Text>
             </>
-            : <View style={styles.container}>
+            :
+            <>
               <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
               <Text style={styles.title}>Giriş Yap</Text>
               <Text style={styles.loadingText}>Giriş yapılıyor...</Text>
-            </View>
+            </>
           }
-        </ScrollView>
+        </View >
+      </ScrollView>
 
-      </View>
     </>
   );
 }

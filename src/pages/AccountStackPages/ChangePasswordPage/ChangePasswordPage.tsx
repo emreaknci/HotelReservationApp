@@ -28,6 +28,14 @@ const ChangePasswordPage = ({ navigation }) => {
     newPassword: '',
   });
 
+  const getCurrentUserId = async () => {
+    var currentUserId = await storageService.getAsync("userId");
+    setUserId(currentUserId);
+    setData((prevData) => ({ ...prevData, id: currentUserId }));
+  }
+  useEffect(() => {
+    getCurrentUserId();
+  }, []);
 
   useEffect(() => {
     validateData();
@@ -55,13 +63,10 @@ const ChangePasswordPage = ({ navigation }) => {
 
 
   const handlePress = async () => {
-    if (!validateData()) {
+    if (!validateData())
       return;
-    }
 
     setLoading(true);
-    var currentUserId = await storageService.getAsync("userId");
-    setData((prevData) => ({ ...prevData, id: currentUserId }));
     await userService.changePassword(data)
       .then((res) => {
         toast.show("Şifre değiştirildi, lütfen tekrar giriş yapınız.", {
@@ -72,17 +77,19 @@ const ChangePasswordPage = ({ navigation }) => {
         });
         authContext.logOut();
         navigation.navigate('LoginPage');
-        setLoading(false);
       })
       .catch((err) => {
+        console.log(err.response.data)
         toast.show(err.response.data.message, {
           type: "custom_type",
           placement: "center",
           animationType: "zoom-in",
           swipeEnabled: true,
         });
-        setLoading(false);
       })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
 

@@ -108,7 +108,6 @@ const HotelsPage = ({ navigation }) => {
   };
 
   const handleConfirmDelete = () => {
-    console.log("dasdsa", hotelId)
     setConfirmationModalVisible(false);
     deleteHotel(hotelId);
   };

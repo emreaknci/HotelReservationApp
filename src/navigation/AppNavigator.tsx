@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer, useFocusEffect } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -19,7 +19,6 @@ import ChangePasswordPage from '../pages/AccountStackPages/ChangePasswordPage';
 import HotelDetailPage from "../pages/HomeStackPages/HotelDetailPage/HotelDetailPage"
 import RoomDetailPage from '..//pages/HomeStackPages/HotelDetailPage/RoomDetailPage/RoomDetailPage';
 import BookingPage from './../pages/ReservationStackPages/BookingPage/BookingPage';
-import BackButtonComponent from '../components/BackButtonComponent/BackButtonComponent';
 import MyReservationsPage from './../pages/ReservationStackPages/MyReservationsPage/MyReservationsPage';
 import HotelsPage from './../pages/AdminPanelStackPages/HotelsPage/HotelsPage';
 import RoomsPage from './../pages/AdminPanelStackPages/RoomsPage/RoomsPage';
@@ -84,7 +83,6 @@ const ReservationStack = () => {
             headerTintColor: colors.text,
             headerStyle: { backgroundColor: colors.primary },
             headerTitleAlign: "center",
-            // headerLeft: () => <BackButtonComponent />,
           };
         }}
       />

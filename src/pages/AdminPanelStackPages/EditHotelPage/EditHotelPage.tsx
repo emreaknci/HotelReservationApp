@@ -191,7 +191,6 @@ const EditHotelPage = ({ route, navigation }) => {
       .catch((err) => {
         console.log(err)
         console.log(err.response)
-        console.log(err.response.data);
         if (err.response.data)
           toast.show(err.response.data.message, {
             type: "custom_type",
@@ -353,12 +352,12 @@ const EditHotelPage = ({ route, navigation }) => {
             />}
             {hotel?.images &&
               <>
-                <View style={styles.inputContainer}>
+               {!hotel?.images.some(image => image.includes('no-image')) && <View style={styles.inputContainer}>
                   <MaterialCommunityIcons name="image-multiple-outline" style={styles.inputIcon} />
                   <TouchableOpacity style={styles.button} onPress={() => handleToggleVisibility()}>
                     <Text style={styles.input}>Mevcut Resimleri Gör</Text>
                   </TouchableOpacity>
-                </View>
+                </View>}
                 {toggleAvailableImagesVisibility &&
                   <View style={styles.imageContainer}>
                     <Text style={styles.input}>Silmek istediklerinizi işaretleyin</Text>
