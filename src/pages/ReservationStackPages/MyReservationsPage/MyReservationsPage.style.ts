@@ -47,7 +47,7 @@ export default StyleSheet.create({
     borderColor: colors.primary,
     borderRadius: 50,
     padding: 10,
-    marginHorizontal: 5,    
+    marginHorizontal: 5,
   },
   reservationContainerActiveButtonText: {
     color: colors.text,
@@ -57,7 +57,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 20,
     margin: 10,
-    padding: 15,
+    paddingTop: 15,
     shadowColor: colors.primary,
     shadowOffset: {
       width: 0,
@@ -68,6 +68,7 @@ export default StyleSheet.create({
     elevation: 10,
   },
   reservationCardHeader: {
+    paddingHorizontal: 15,
     marginBottom: 10,
   },
   reservationCardHeaderText: {
@@ -78,26 +79,29 @@ export default StyleSheet.create({
   reservationCardHeaderSubText: {
     color: colors.primary,
   },
-  reservationCardBody: {},
+  reservationCardBody: {
+    paddingHorizontal: 15,
+  },
   reservationCardBodyRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
   },
   reservationCardBodyRowText: {
     fontSize: 16,
     color: colors.primary,
-
   },
   reservationCardBodyRowButton: {
     backgroundColor: colors.primary,
-    borderRadius: 50,
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
     padding: 10,
+    width: "100%",
     marginTop: 10,
   },
   reservationCardBodyRowButtonText: {
     fontSize: 16,
     color: colors.text,
+    textAlign: 'center',
   },
 
 });

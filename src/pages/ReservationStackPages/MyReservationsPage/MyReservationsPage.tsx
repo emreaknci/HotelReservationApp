@@ -8,6 +8,7 @@ import ReservationListDto from './../../../types/reservations/reservationListDto
 import { useFocusEffect } from "@react-navigation/native";
 import HeaderComponent from './../../../components/HeaderComponent/HeaderComponent';
 import { useToast } from "react-native-toast-notifications";
+import colors from './../../../../colors';
 
 const MyReservationsPage = ({ route, navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -160,13 +161,13 @@ const MyReservationsPage = ({ route, navigation }) => {
   const handleCancel = async (reservationId: number) => {
     await ReservationService.cancelReservation(reservationId)
       .then((response) => {
-          toast.show(response.data.message, {
-            type: "custom_type",
-            placement: "center",
-            animationType: "zoom-in",
-            swipeEnabled: true,
-          });
-          handleReservationBtn();
+        toast.show(response.data.message, {
+          type: "custom_type",
+          placement: "center",
+          animationType: "zoom-in",
+          swipeEnabled: true,
+        });
+        handleReservationBtn();
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -183,41 +184,49 @@ const MyReservationsPage = ({ route, navigation }) => {
   }
   const renderReservation = (reservation: ReservationListDto) => {
     return (
-      <View key={reservation.id} style={styles.reservationCard} >
-        <View style={styles.reservationCardHeader}>
-          <Text style={styles.reservationCardHeaderText} onPress={() => navigateToHotelDetailPage(reservation.hotelId, reservation.hotelName)}>{reservation.hotelName}</Text>
-          <Text style={styles.reservationCardHeaderSubText} onPress={() => navigateToRoomDetailPage(reservation.roomId, reservation.roomName)} >{reservation.roomName}</Text>
-          <Text style={styles.reservationCardHeaderSubText}>{reservation.roomType}</Text>
-        </View>
-        <View style={styles.reservationCardBody}>
-          <View style={styles.reservationCardBodyRow}>
-            <Text style={styles.reservationCardBodyRowText}>Giriş Tarihi</Text>
-            <Text style={styles.reservationCardBodyRowText}>{reservation.checkInDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+      <>
+        <View key={reservation.id} style={styles.reservationCard} >
+          <View style={styles.reservationCardHeader}>
+            <Text style={styles.reservationCardHeaderText} onPress={() => navigateToHotelDetailPage(reservation.hotelId, reservation.hotelName)}>{reservation.hotelName}</Text>
+            <Text style={styles.reservationCardHeaderSubText} onPress={() => navigateToRoomDetailPage(reservation.roomId, reservation.roomName)} >{reservation.roomName}</Text>
+            <Text style={styles.reservationCardHeaderSubText}>{reservation.roomType}</Text>
+          </View>
+          <View style={styles.reservationCardBody}>
+            <View style={styles.reservationCardBodyRow}>
+              <Text style={styles.reservationCardBodyRowText}>Giriş Tarihi</Text>
+              <Text style={styles.reservationCardBodyRowText}>{reservation.checkInDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+            </View>
+            <View style={styles.reservationCardBodyRow}>
+              <Text style={styles.reservationCardBodyRowText}>Çıkış Tarihi</Text>
+              <Text style={styles.reservationCardBodyRowText}>{reservation.checkOutDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+            </View>
+            <View style={styles.reservationCardBodyRow}>
+              <Text style={styles.reservationCardBodyRowText}>Durum</Text>
+              <Text style={styles.reservationCardBodyRowText}>{reservation.paymentStatus == "Paid" ? "Ödendi" : "İptal Edildi"}</Text>
+            </View>
+            <View style={styles.reservationCardBodyRow}>
+              <Text style={styles.reservationCardBodyRowText}>Toplam Fiyat</Text>
+              <Text style={styles.reservationCardBodyRowText}>₺ {reservation.amount}</Text>
+            </View>
           </View>
           <View style={styles.reservationCardBodyRow}>
-            <Text style={styles.reservationCardBodyRowText}>Çıkış Tarihi</Text>
-            <Text style={styles.reservationCardBodyRowText}>{reservation.checkOutDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
-          </View>
-          <View style={styles.reservationCardBodyRow}>
-            <Text style={styles.reservationCardBodyRowText}>Durum</Text>
-            <Text style={styles.reservationCardBodyRowText}>{reservation.paymentStatus == "Paid" ? "Ödendi" : "İptal Edildi"}</Text>
-          </View>
-          <View style={styles.reservationCardBodyRow}>
-            <Text style={styles.reservationCardBodyRowText}>Toplam Fiyat</Text>
-            <Text style={styles.reservationCardBodyRowText}>₺ {reservation.amount}</Text>
-          </View>
-        </View>
-        {(new Date(reservation.checkInDate) > new Date() && reservation.paymentStatus == "Paid") && (
-          <View style={styles.reservationCardBodyRow}>
-            <TouchableOpacity activeOpacity={0.8} style={styles.reservationCardBodyRowButton} onPress={() => handleCancel(reservation.id)}>
-              <Text style={styles.reservationCardBodyRowButtonText}>İptal Et</Text>
+            <TouchableOpacity
+              activeOpacity={new Date(reservation.checkInDate) > new Date() && reservation.paymentStatus === "Paid" ? 0.8 : 1}
+              style={{
+                ...styles.reservationCardBodyRowButton,
+                backgroundColor: new Date(reservation.checkInDate) > new Date() && reservation.paymentStatus === "Paid" ? colors.primary : colors.secondary,
+              }}
+              onPress={() => new Date(reservation.checkInDate) > new Date() && reservation.paymentStatus === "Paid" && handleCancel(reservation.id)}
+              disabled={!(new Date(reservation.checkInDate) > new Date() && reservation.paymentStatus === "Paid")}
+            >
+              <Text style={styles.reservationCardBodyRowButtonText}>
+                {new Date(reservation.checkInDate) > new Date() && reservation.paymentStatus === "Paid" ? "İptal Et" : "İptal Edilemez"}
+              </Text>
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.8} style={styles.reservationCardBodyRowButton} onPress={() => handleEdit(reservation.id)}>
-              <Text style={styles.reservationCardBodyRowButtonText}>Düzenle</Text>
-            </TouchableOpacity>
           </View>
-        )}
-      </View>
+
+        </View>
+      </>
     )
 
   }

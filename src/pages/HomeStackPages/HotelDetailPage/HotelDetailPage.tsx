@@ -23,7 +23,6 @@ const HotelDetailPage = ({ route, navigation }) => {
         setHotelCarouselItems(response.data.data.images.map((image) => {
           return { image: image }
         }))
-        console.log(response.data.data)
       })
       .catch(error => console.log(error.response));
   }

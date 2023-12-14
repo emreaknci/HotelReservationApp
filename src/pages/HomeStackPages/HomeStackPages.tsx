@@ -11,13 +11,13 @@ const HomePage = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   const getHotelWithImages = () => {
-    hotelService.getAllWithImages()
+    hotelService.getHotelsWithFirstImage(5)
       .then((res) => {
-        var active = res.data.data.filter((item) => item.status == true);
-        const carouselItems = active.map((item) => {
+        const data = res.data.data
+        const carouselItems = data.map((item) => {
           return {
             id: item.id,
-            image: item.images[0],
+            image: item.imagePath,
             title: item.name,
           }
         })
@@ -25,7 +25,6 @@ const HomePage = ({ navigation }) => {
       }).catch((err) => {
         console.log(err);
       })
-
   }
 
   useEffect(() => {

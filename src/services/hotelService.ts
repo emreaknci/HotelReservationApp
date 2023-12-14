@@ -4,13 +4,16 @@ import Result from "src/types/result";
 import BaseService from './baseService';
 import HotelDto from './../types/hotels/hotelDto';
 import Hotel from "../types/hotels/hotel";
+import HotelWithImageDto from './../types/hotels/hotelWithImageDto';
 
 
 const HotelService = {
     getAllWithImages: (): Promise<AxiosResponse<Result<HotelDetailDto[]>>> => {
         return BaseService.get('/hotel/get-all-with-images');
     },
-
+    getHotelsWithFirstImage: (hotelCount=0): Promise<AxiosResponse<Result<HotelWithImageDto[]>>> => {
+        return BaseService.get(`/hotel/get-hotels-with-first-image?hotelCount=${hotelCount}`);
+    },
     getByIdWithImages: (id: number): Promise<AxiosResponse<Result<HotelDetailDto>>> => {
         return BaseService.get(`/hotel/get-by-id-with-images/${id}`);
     },
