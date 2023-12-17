@@ -2,20 +2,20 @@
 import { View, Text, ScrollView, RefreshControl, ActivityIndicator, Image, TouchableOpacity } from "react-native";
 import styles from "./HomeStackPages.style";
 import hotelService from '../../services/hotelService';
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import CarouselComponent from "../../components/CarouselComponent/CarouselComponent";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent";
 import { useFocusEffect } from "@react-navigation/native";
 import RoomService from './../../services/roomService';
 import RoomDto from './../../types/rooms/roomDto';
 import { FlatList } from "react-native";
-import HotelDetailDto from "src/types/hotels/hotelDetailDto";
 import HotelWithImageDto from './../../types/hotels/hotelWithImageDto';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import colors from './../../../colors';
 import ReservationService from './../../services/reservationService';
 import ReservationListDto from './../../types/reservations/reservationListDto';
 import { AuthContext } from './../../context/AuthContext';
+
 const HomePage = ({ navigation }) => {
   const [carouselItems, setCarouselItems] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
@@ -23,8 +23,9 @@ const HomePage = ({ navigation }) => {
   const [hotels, setHotels] = useState<HotelWithImageDto[]>(null);
   const [reservations, setReservations] = useState<ReservationListDto[]>(null);
   const authContext = useContext(AuthContext);
+
   const getHotelsWithFirstImage = () => {
-    hotelService.getHotelsWithFirstImage(2)
+    hotelService.getHotelsWithFirstImage(6)
       .then((res) => {
         const data = res.data.data;
 
@@ -45,8 +46,9 @@ const HomePage = ({ navigation }) => {
         console.log(err);
       })
   }
+
   const getLatestRooms = () => {
-    RoomService.getLatestRoomsPerHotel(5)
+    RoomService.getLatestRoomsPerHotel(6)
       .then((res) => {
         const data = res.data.data
         setRooms(data);
