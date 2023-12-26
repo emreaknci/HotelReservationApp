@@ -1,6 +1,15 @@
-# Hotel Reservation
+<p align="center">
+  <img src="./assets/logo.png" width="300">
+</p>
 
-Welcome to the Hotel Reservation System mobile application built with React Native! This app offers essential features for a seamless hotel reservation experience, enabling users to explore available rooms, book accommodations, and effortlessly manage their reservations.
+# Hotel Cloud
+
+Welcome to the Hotel Cloud mobile application built with React Native! This app offers essential features for a seamless hotel reservation experience, enabling users to explore available rooms, book accommodations, and effortlessly manage their reservations.
+
+[Watch the app video on YouTube](https://www.youtube.com/watch?v=FjG93IPhNWo)
+
+[Show the app screenshoots](#screenshots)
+
 
 ## Getting Started
 
@@ -26,10 +35,7 @@ Before you can run this project, you will need to install the following developm
   2. Sign up for a free account.
 
   3. Download and install Ngrok on your machine by following the instructions on the Ngrok website.
- 
-  or
-  
-      npm i ngrok
+
 
 Once you have installed these tools, you will be ready to run the project on your local machine or mobile device.
 
@@ -51,7 +57,7 @@ Install the required dependencies:
 
 ### Ngrok Usage
 
-To expose your locally running backend ([this project's server](https://github.com/emreaknci/HotelReservation) runs on port 5169 by default) to the internet using Ngrok, follow these steps:
+To expose your locally running backend ([this project's backend server](https://github.com/emreaknci/HotelReservation) runs on port 5169 by default) to the internet using Ngrok, follow these steps:
 
 1. Run the following command in your terminal:
 
@@ -77,6 +83,30 @@ Now the connection with the client is ensured! Don't forget to start the backend
 Start the application:
 
     npx expo start 
+
+
+## Screenshots
+
+<p align="center">
+
+| *Home Screen* | *Hotel Detail Screen* | *Room Detail Screen* |
+| --- | --- | --- |
+| <img src="./assets/ScreenShots/home.jpg" width="400"> | <img src="./assets/ScreenShots/hotel_detail.jpg" width="400"> | <img src="./assets/ScreenShots/room_detail.jpg" width="400"> |
+
+| *Reservation Screens* |  |  |
+| --- | --- | --- |
+| <img src="./assets/ScreenShots/reservation_date.jpg" width="400"> | <img src="./assets/ScreenShots/reservation_date_check.jpg" width="400"> | <img src="./assets/ScreenShots/credit_card.jpg" width="400"> |
+| <img src="./assets/ScreenShots/reservation_created.jpg" width="400"> | <img src="./assets/ScreenShots/all_reservation.jpg" width="400"> | <img src="./assets/ScreenShots/active_reservation.jpg" width="400"> |
+
+
+
+| *Other Screens* |  |  |
+| --- | --- | --- |
+| <img src="./assets/ScreenShots/admin.jpg" width="400"> | <img src="./assets/ScreenShots/user_page.jpg" width="400"> | <img src="./assets/ScreenShots/change_password.jpg" width="400"> |
+| <img src="./assets/ScreenShots/users.jpg" width="400"> | <img src="./assets/ScreenShots/reservations.jpg" width="400"> | <img src="./assets/ScreenShots/payments.jpg" width="400"> |
+
+</p>
+
 
 ## Contributing
 I welcome contributions! If you find a bug or have a feature request, please open an issue. If you would like to contribute code, please fork the repository and create a pull request.

@@ -130,8 +130,7 @@ const ChangePasswordPage = ({ navigation }) => {
             </>
             : <View style={styles.container}>
               <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
-              <Text style={styles.title}>Giriş Yap</Text>
-              <Text style={styles.loadingText}>Giriş yapılıyor...</Text>
+              <Text style={styles.loadingText}>Şifre değiştiriliyor...</Text>
             </View>
           }
         </ScrollView>

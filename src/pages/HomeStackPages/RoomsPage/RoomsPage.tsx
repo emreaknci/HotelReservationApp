@@ -54,8 +54,9 @@ const RoomsPage = ({ navigation }) => {
     setLoading(true);
     RoomService.getRoomsWithImages()
       .then((response) => {
-        setRooms(response.data.data)
-        setFilteredRooms(response.data.data)
+        const activeRooms = response.data.data.filter((room) => room.status);
+        setRooms(activeRooms)
+        setFilteredRooms(activeRooms)
       })
       .catch((err) => {
         console.log(err.response.data)

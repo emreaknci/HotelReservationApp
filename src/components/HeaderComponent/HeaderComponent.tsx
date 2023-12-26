@@ -6,8 +6,7 @@ const HeaderComponent = () => {
 
   return (
     <View style={styles.headerContainer}>
-      <Text style={styles.headerText}>TRIVAGO</Text>
-      {/* <Image style={styles.headerImage} source={require("../../assets/splash_image.png")} /> */}
+      <Text style={styles.headerText}>HOTEL CLOUD</Text>
     </View>
   );
 }
