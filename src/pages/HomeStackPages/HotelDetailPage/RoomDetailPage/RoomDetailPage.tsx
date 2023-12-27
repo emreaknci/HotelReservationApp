@@ -62,10 +62,10 @@ const RoomDetailPage = ({ route, navigation }) => {
             <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
               <View style={styles.infoContainer}>
                 <TouchableOpacity activeOpacity={1} onPress={toggleDescription}>
-                  <Text style={{ ...styles.text, fontWeight: "bold" }}>Açıklama</Text>
+                  <Text style={styles.title}>Açıklama</Text>
                   <Text style={styles.text}>{getDescriptionToShow()}</Text>
                 </TouchableOpacity>
-                <Text style={{ ...styles.text, fontWeight: "bold", marginTop: 20 }}>Oda İmkanları</Text>
+                <Text style={styles.title}>Oda İmkanları</Text>
                 <View style={styles.content}>
                   <View style={styles.contentItem}>
                     <MaterialCommunityIcons name="bed" size={24} color={colors.primary} style={styles.icon} />
@@ -98,7 +98,7 @@ const RoomDetailPage = ({ route, navigation }) => {
                   <Text style={styles.buttonText}>Rezervasyon Yap</Text>
                 </TouchableOpacity>
                 :
-                <TouchableOpacity activeOpacity={0.8} style={styles.button} disabled>
+                <TouchableOpacity activeOpacity={0.8} style={{...styles.button,backgroundColor:colors.secondary}} disabled>
                   <Text style={{ ...styles.buttonText, fontSize: 14 }}>Rezervasyon Yapabilmek İçin Lütfen Giriş Yapın</Text>
                 </TouchableOpacity>}
             </ScrollView>

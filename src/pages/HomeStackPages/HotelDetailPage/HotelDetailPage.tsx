@@ -7,6 +7,7 @@ import CarouselComponent, { CarouselItem } from './../../../components/CarouselC
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import RoomDetailDto from '../../../types/rooms/roomDetailDto';
 import { useFocusEffect } from "@react-navigation/native";
+import colors from "../../../../colors";
 
 const HotelDetailPage = ({ route, navigation }) => {
   const { id } = route.params;
@@ -92,7 +93,7 @@ const HotelDetailPage = ({ route, navigation }) => {
     return (
       <View style={styles.roomContainer}>
         <View style={styles.roomInfoContainer}>
-          <Text style={{ ...styles.text, fontSize: 24, fontWeight: "bold" }}>{item.name}</Text>
+          <Text style={{ ...styles.text, fontSize: 24, fontWeight: "bold",color:colors.primary }}>{item.name}</Text>
         </View>
         <Image style={styles.roomImage}
           source={{ uri: `${process.env.EXPO_PUBLIC_API_URL}${item.images[0]}` }} />

@@ -21,7 +21,7 @@ export default StyleSheet.create({
     text: {
         fontSize: 16,
         textAlign: 'justify',
-        color: colors.primary,
+        color: "black",
     },
     infoContainer: {
         flexDirection: 'row',
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     infoText: {
         fontSize: 18,
         textAlign: 'right',
-        color: colors.primary,
+        color: "black",
     },
     infoIcon:
     {

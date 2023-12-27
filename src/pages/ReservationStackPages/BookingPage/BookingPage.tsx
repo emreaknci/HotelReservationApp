@@ -341,7 +341,6 @@ const BookingPage = ({ route, navigation }) => {
           dropdownIconPosition='right'
           renderDropdownIcon={() => <MaterialCommunityIcons name="chevron-down" style={styles.inputIcon} />}
           buttonStyle={{ width: "45%", backgroundColor: colors.background }}
-          buttonTextStyle={{ color: colors.primary }}
           onSelect={(selectedItem, index) => {
             setSelectedMonth(selectedItem)
           }}
@@ -356,7 +355,6 @@ const BookingPage = ({ route, navigation }) => {
           dropdownIconPosition='right'
           renderDropdownIcon={() => <MaterialCommunityIcons name="chevron-down" style={styles.inputIcon} />}
           buttonStyle={{ width: "45%", backgroundColor: colors.background }}
-          buttonTextStyle={{ color: colors.primary }}
           onSelect={(selectedItem, index) => {
             setSelectedYear(selectedItem)
           }}
@@ -417,25 +415,25 @@ const BookingPage = ({ route, navigation }) => {
 
         <View style={{ ...styles.reservationInfoContainer }}>
           <View style={{ ...styles.infoContainer, justifyContent: "center", borderBottomWidth: 3, borderBottomColor: colors.primary }}>
-            <Text style={{ ...styles.reservationInfoText, fontWeight: "bold", fontSize: 24 }}>Rezervasyon Bilgileri</Text>
+            <Text style={{ ...styles.reservationInfoText, fontWeight: "bold", fontSize: 24,color:colors.primary }}>Rezervasyon Bilgileri</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold" }}>Otel:</Text> {roomDetail.hotelName}</Text>
+            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold",color:colors.primary }}>Otel:</Text> {roomDetail.hotelName}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold" }}>Oda:</Text> {roomDetail.name}</Text>
+            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold",color:colors.primary }}>Oda:</Text> {roomDetail.name}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold" }}>Gün:</Text> {`${totalDay} gün ${totalDay} gece`}</Text>
+            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold",color:colors.primary }}>Gün:</Text> {`${totalDay} gün ${totalDay} gece`}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold" }}>Toplam Tutar:</Text> ₺ {roomDetail.price * totalDay}</Text>
+            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold",color:colors.primary }}>Toplam Tutar:</Text> ₺ {roomDetail.price * totalDay}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold" }}>Giriş Tarihi:</Text> {checkInDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold",color:colors.primary }}>Giriş Tarihi:</Text> {checkInDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold" }}>Toplam Tutar:</Text> {checkOutDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
+            <Text style={{ ...styles.reservationInfoText }}><Text style={{ fontWeight: "bold",color:colors.primary }}>Toplam Tutar:</Text> {checkOutDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
           </View>
         </View>
 

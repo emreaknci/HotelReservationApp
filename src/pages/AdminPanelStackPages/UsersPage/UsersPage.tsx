@@ -106,8 +106,8 @@ const UsersPage = () => {
             <View style={styles.userCardHeader}>
 
               <View style={styles.userCardBody}>
-                <Text style={styles.userCardHeaderText}>Kullanıcı:</Text>
                 <Text style={styles.userCardHeaderText}>#{user.id}</Text>
+                <Text style={styles.userCardHeaderText}></Text>
               </View>
               <View style={styles.userCardBody}>
                 <Text style={styles.userCardBodyText}>Ad:</Text>

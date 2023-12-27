@@ -11,6 +11,7 @@ import ModalComponent from './../../../components/ModalComponent/ModalComponent'
 import SelectDropdown from "react-native-select-dropdown";
 import HotelDto from './../../../types/hotels/hotelDto';
 import HotelService from './../../../services/hotelService';
+import colors from "../../../../colors";
 
 const RoomsPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -98,7 +99,10 @@ const RoomsPage = ({ navigation }) => {
     setLoading(true);
     RoomService.changeRoomStatus(roomId)
       .then((response) => {
-        getRoomsByHotelId(selectedHotelId);
+        if (selectedHotelId === 0)
+          getAllRooms();
+        else
+          getRoomsByHotelId(selectedHotelId);
         toast.show(response.data.message, {
           type: "custom_type",
           placement: "center",
@@ -193,8 +197,8 @@ const RoomsPage = ({ navigation }) => {
           <View style={styles.roomInfoContainer}>
             <View style={styles.roomCardHeader}>
               <View style={styles.roomCardBody}>
-                <Text style={styles.roomCardHeaderText}>Oda:</Text>
                 <Text style={styles.roomCardHeaderText}>#{room.id}</Text>
+                <Text style={styles.roomCardHeaderText}></Text>
               </View>
               <View style={styles.roomCardBody}>
                 <Text style={styles.roomCardBodyText}>Oda Adı:</Text>
@@ -206,7 +210,10 @@ const RoomsPage = ({ navigation }) => {
               </View>
               <View style={styles.roomCardBody}>
                 <Text style={styles.roomCardBodyText}>Durum:</Text>
-                <Text style={styles.roomCardBodyText} onPress={() => handleRoomStatusChange(room.id)}>
+                <Text style={[
+                  styles.roomCardBodyText,
+                  { color: room.status ? 'green' : colors.primary },
+                ]} onPress={() => handleRoomStatusChange(room.id)}>
                   {room.status ? "Aktif (Kullanım Dışı Yap)" : "Kullanım Dışı (Aktif Yap)"}
                 </Text>
               </View>

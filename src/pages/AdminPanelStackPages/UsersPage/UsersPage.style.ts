@@ -51,7 +51,6 @@ export default StyleSheet.create({
     userCardHeaderText: {
         flexDirection: 'row',
         fontSize: 20,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     userCardBody: {
@@ -63,7 +62,6 @@ export default StyleSheet.create({
     },
     userCardBodyText: {
         fontSize: 16,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     userCardBodyButtonContainer:{

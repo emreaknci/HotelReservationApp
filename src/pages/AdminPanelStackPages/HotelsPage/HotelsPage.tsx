@@ -8,6 +8,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import HotelDetailDto from './../../../types/hotels/hotelDetailDto';
 import ModalComponent from './../../../components/ModalComponent/ModalComponent';
+import colors from "../../../../colors";
 
 const HotelsPage = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -122,8 +123,8 @@ const HotelsPage = ({ navigation }) => {
           <View style={styles.hotelInfoContainer}>
             <View style={styles.hotelCardHeader}>
               <View style={styles.hotelCardBody}>
-                <Text style={styles.hotelCardHeaderText}>Otel:</Text>
                 <Text style={styles.hotelCardHeaderText}>#{hotel.id}</Text>
+                <Text style={styles.hotelCardHeaderText}></Text>
               </View>
               <View style={styles.hotelCardBody}>
                 <Text style={styles.hotelCardBodyText}>Otel Adı:</Text>
@@ -139,8 +140,14 @@ const HotelsPage = ({ navigation }) => {
               </View>
               <View style={styles.hotelCardBody}>
                 <Text style={styles.hotelCardBodyText}>Durum:</Text>
-                <Text style={styles.hotelCardBodyText} onPress={() => handleHotelStatusChange(hotel.id)}
-                >{hotel.status ? "Aktif (Kullanım Dışı Yap)" : "Kullanım Dışı (Aktif Yap)"}
+                <Text
+                  style={[
+                    styles.hotelCardBodyText,
+                    { color: hotel.status ? 'green' : colors.primary },
+                  ]}
+                  onPress={() => handleHotelStatusChange(hotel.id)}
+                >
+                  {hotel.status ? 'Aktif (Kullanım Dışı Yap)' : 'Kullanım Dışı (Aktif Yap)'}
                 </Text>
 
               </View>

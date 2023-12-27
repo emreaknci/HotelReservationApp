@@ -77,7 +77,6 @@ export default StyleSheet.create({
     color: colors.primary,
   },
   reservationCardHeaderSubText: {
-    color: colors.primary,
   },
   reservationCardBody: {
     paddingHorizontal: 15,
@@ -88,7 +87,6 @@ export default StyleSheet.create({
   },
   reservationCardBodyRowText: {
     fontSize: 16,
-    color: colors.primary,
   },
   reservationCardBodyRowButton: {
     backgroundColor: colors.primary,

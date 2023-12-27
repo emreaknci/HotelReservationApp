@@ -117,15 +117,23 @@ const HomePage = ({ navigation }) => {
           <View style={styles.itemContainerRow}>
             <Text style={styles.text}> ₺ {room.price}</Text>
           </View>
-          <View style={styles.itemContainerRow}>
-            <TouchableOpacity style={styles.button} activeOpacity={0.8}
-              onPress={() => navigation.navigate('ReservationStack', {
-                screen: 'BookingPage',
-                params: { id: room.id, title: `Rezervasyon Yap` },
-              })}>
-              <Text style={styles.buttonText}>Rezervasyon Yap</Text>
+          {authContext.isAuthenticated && <View style={styles.itemContainerRow}>
+            <TouchableOpacity
+              disabled={!authContext.isAuthenticated}
+              style={styles.button}
+              activeOpacity={0.8}
+              onPress={() =>
+
+                navigation.navigate('ReservationStack', {
+                  screen: 'BookingPage',
+                  params: { id: room.id, title: `Rezervasyon Yap` },
+                })
+              }>
+              <Text style={styles.buttonText}>
+                Rezervasyon Yap
+              </Text>
             </TouchableOpacity>
-          </View>
+          </View>}
         </View>
       </View>
     );

@@ -189,7 +189,6 @@ const MyReservationsPage = ({ route, navigation }) => {
           <View style={styles.reservationCardHeader}>
             <Text style={styles.reservationCardHeaderText} onPress={() => navigateToHotelDetailPage(reservation.hotelId, reservation.hotelName)}>{reservation.hotelName}</Text>
             <Text style={styles.reservationCardHeaderSubText} onPress={() => navigateToRoomDetailPage(reservation.roomId, reservation.roomName)} >{reservation.roomName}</Text>
-            <Text style={styles.reservationCardHeaderSubText}>{reservation.roomType}</Text>
           </View>
           <View style={styles.reservationCardBody}>
             <View style={styles.reservationCardBodyRow}>
@@ -206,7 +205,7 @@ const MyReservationsPage = ({ route, navigation }) => {
             </View>
             <View style={styles.reservationCardBodyRow}>
               <Text style={styles.reservationCardBodyRowText}>Toplam Fiyat</Text>
-              <Text style={styles.reservationCardBodyRowText}>₺ {reservation.amount}</Text>
+              <Text style={{...styles.reservationCardBodyRowText,color:reservation.paymentStatus == "Paid" ? "green": colors.primary}}>₺ {reservation.amount}</Text>
             </View>
           </View>
           <View style={styles.reservationCardBodyRow}>

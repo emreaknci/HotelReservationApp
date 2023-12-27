@@ -57,7 +57,6 @@ export default StyleSheet.create({
         width: "40%",
     },
     buttonContainerText: {
-        color: colors.primary,
         textAlign: "center",
         fontWeight: "bold",
         fontSize: 16,
@@ -103,7 +102,6 @@ export default StyleSheet.create({
         marginBottom: 10,
     },
     infoText: {
-        color: colors.primary,
         fontSize: 16,
     },
     reservationInfoContainer: {
@@ -112,6 +110,5 @@ export default StyleSheet.create({
     },
     reservationInfoText: {
         fontSize: 18,        
-        color: colors.primary,
     }
 });

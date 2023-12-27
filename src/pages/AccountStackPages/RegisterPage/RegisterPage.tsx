@@ -109,66 +109,65 @@ const RegisterPage = ({ navigation }) => {
     return (
         <>
             <HeaderComponent />
-            <ScrollView showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
-                <View style={styles.container}>
-                    {!loading ?
-                        <>
-                            <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
-                            <Text style={styles.title}>Kayıt Ol</Text>
-                            <View style={styles.inputContainer}>
-                                <MaterialCommunityIcons name="account" style={styles.inputIcon} />
-                                <TextInput style={styles.input} placeholder={'Ad'} value={registerData.firstName}
-                                    onChangeText={(value) => handleInputChange('firstName', value)}
+            <ScrollView style={styles.container} contentContainerStyle={{ justifyContent: 'center', alignItems: 'center' }}
+                showsVerticalScrollIndicator={false} showsHorizontalScrollIndicator={false}>
+                {!loading ?
+                    <>
+                        <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
+                        <Text style={styles.title}>Kayıt Ol</Text>
+                        <View style={styles.inputContainer}>
+                            <MaterialCommunityIcons name="account" style={styles.inputIcon} />
+                            <TextInput style={styles.input} placeholder={'Ad'} value={registerData.firstName}
+                                onChangeText={(value) => handleInputChange('firstName', value)}
 
-                                />
-                                {errorMessages.firstName && <Text style={styles.errorText}>
-                                    {errorMessages.firstName} <MaterialCommunityIcons
-                                        name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>}
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <MaterialCommunityIcons name="account" style={styles.inputIcon} />
-                                <TextInput style={styles.input} placeholder={'Soyad'} value={registerData.lastName}
-                                    onChangeText={(value) => handleInputChange('lastName', value)}
-                                />
-                                {errorMessages.lastName && <Text style={styles.errorText}>
-                                    {errorMessages.lastName} <MaterialCommunityIcons
-                                        name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>}
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <MaterialCommunityIcons name="email" style={styles.inputIcon} />
-                                <TextInput style={styles.input} placeholder={'Mail'} value={registerData.email}
-                                    onChangeText={(value) => handleInputChange('email', value)}
-                                />
-                                {errorMessages.email && <Text style={styles.errorText}>
-                                    {errorMessages.email} <MaterialCommunityIcons
-                                        name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>}
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <MaterialCommunityIcons name="lock" style={styles.inputIcon} />
-                                <TextInput style={styles.input} placeholder={'Şifre'} value={registerData.password}
-                                    secureTextEntry={true} onChangeText={(value) => handleInputChange('password', value)}
-                                />
-                                {errorMessages.password && <Text style={styles.errorText}>
-                                    {errorMessages.password} <MaterialCommunityIcons
-                                        name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>
-                                }
-                            </View>
+                            />
+                            {errorMessages.firstName && <Text style={styles.errorText}>
+                                {errorMessages.firstName} <MaterialCommunityIcons
+                                    name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>}
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <MaterialCommunityIcons name="account" style={styles.inputIcon} />
+                            <TextInput style={styles.input} placeholder={'Soyad'} value={registerData.lastName}
+                                onChangeText={(value) => handleInputChange('lastName', value)}
+                            />
+                            {errorMessages.lastName && <Text style={styles.errorText}>
+                                {errorMessages.lastName} <MaterialCommunityIcons
+                                    name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>}
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <MaterialCommunityIcons name="email" style={styles.inputIcon} />
+                            <TextInput keyboardType='email-address' style={styles.input} placeholder={'Mail'} value={registerData.email}
+                                onChangeText={(value) => handleInputChange('email', value)}
+                            />
+                            {errorMessages.email && <Text style={styles.errorText}>
+                                {errorMessages.email} <MaterialCommunityIcons
+                                    name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>}
+                        </View>
+                        <View style={styles.inputContainer}>
+                            <MaterialCommunityIcons name="lock" style={styles.inputIcon} />
+                            <TextInput style={styles.input} placeholder={'Şifre'} value={registerData.password}
+                                secureTextEntry={true} onChangeText={(value) => handleInputChange('password', value)}
+                            />
+                            {errorMessages.password && <Text style={styles.errorText}>
+                                {errorMessages.password} <MaterialCommunityIcons
+                                    name='alert-circle-outline' style={[styles.errorIcon]} /> </Text>
+                            }
+                        </View>
 
-                            <TouchableOpacity onPress={() => handleRegisterPress()}>
-                                <Text style={styles.button}> Kayıt Ol </Text>
-                            </TouchableOpacity>
+                        <TouchableOpacity onPress={() => handleRegisterPress()}>
+                            <Text style={styles.button}> Kayıt Ol </Text>
+                        </TouchableOpacity>
 
-                            <Text style={styles.footerText} onPress={navigateToLoginPage}>Zaten bir hesabın var mı?</Text>
-                        </>
-                        :
-                        <>
-                            <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
-                            <Text style={styles.title}>Kayıt Ol</Text>
-                            <Text style={styles.loadingText}>Kayıt olunuyor...</Text>
-                        </>
-                    }
-                </View>
-            </ScrollView>
+                        <Text style={styles.footerText} onPress={navigateToLoginPage}>Zaten bir hesabın var mı?</Text>
+                    </>
+                    :
+                    <>
+                        <MaterialCommunityIcons name="account-circle" style={[styles.inputIcon, { fontSize: 100 }]} />
+                        <Text style={styles.title}>Kayıt Ol</Text>
+                        <Text style={styles.loadingText}>Kayıt olunuyor...</Text>
+                    </>
+                }
+        </ScrollView >
 
         </>
 

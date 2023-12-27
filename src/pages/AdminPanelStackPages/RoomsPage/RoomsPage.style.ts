@@ -55,7 +55,6 @@ export default StyleSheet.create({
     roomCardHeaderText: {
         flexDirection: 'row',
         fontSize: 20,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     roomCardBody: {
@@ -67,7 +66,6 @@ export default StyleSheet.create({
     },
     roomCardBodyText: {
         fontSize: 16,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     roomCardBodyButton: {

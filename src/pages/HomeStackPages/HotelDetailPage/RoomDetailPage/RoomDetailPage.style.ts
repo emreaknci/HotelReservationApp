@@ -20,12 +20,20 @@ export default StyleSheet.create({
         shadowRadius: 5,
         elevation: 10,
     },
+    title: {
+        fontSize: 18,
+        marginHorizontal: 10,
+        marginVertical: 5,
+        textAlign: "center",
+        color: colors.primary,
+        fontWeight: "bold" 
+    },
     text: {
         fontSize: 16,
         marginHorizontal: 10,
         marginVertical: 5,
         textAlign: "center",
-        color: colors.primary,
+        color: "black",
     },
     content: {
         flexDirection: "row",
@@ -38,7 +46,7 @@ export default StyleSheet.create({
     },
     contentItemText: {
         fontSize: 16,
-        color: colors.primary,
+        color: "black",
     },
     icon: {
         fontSize: 30,

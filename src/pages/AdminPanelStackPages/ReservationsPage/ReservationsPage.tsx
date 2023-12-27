@@ -213,12 +213,28 @@ const ReservationsPage = () => {
                 <Text style={styles.reservationCardBodyText}>{reservation.checkOutDate.toLocaleString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
               </View>
               <View style={styles.reservationCardBody}>
-                <Text style={styles.reservationCardBodyText}>Toplam Fiyat:</Text>
-                <Text style={styles.reservationCardBodyText}>₺ {reservation.amount}</Text>
+                <Text style={[
+                  styles.reservationCardBodyText,
+                  { color: reservation.paymentStatus === 'Paid' ? 'green' : colors.primary },
+                ]}>Toplam Fiyat:</Text>
+                <Text style={[
+                  styles.reservationCardBodyText,
+                  { color: reservation.paymentStatus === 'Paid' ? 'green' : colors.primary },
+                ]}>₺ {reservation.amount}</Text>
               </View>
               <View style={styles.reservationCardBody}>
-                <Text style={styles.reservationCardBodyText}>Durum:</Text>
-                <Text style={styles.reservationCardBodyText}>{reservation.paymentStatus == "Paid" ? "Ödendi" : "İptal Edildi"}</Text>
+                <Text style={[
+                  styles.reservationCardBodyText,
+                  { color: reservation.paymentStatus === 'Paid' ? 'green' : colors.primary },
+                ]}>Durum:</Text>
+                <Text
+                  style={[
+                    styles.reservationCardBodyText,
+                    { color: reservation.paymentStatus === 'Paid' ? 'green' : colors.primary },
+                  ]}
+                >
+                  {reservation.paymentStatus === 'Paid' ? 'Ödendi' : 'İptal Edildi'}
+                </Text>
               </View>
             </View>
             <View style={styles.reservationCardLine} />

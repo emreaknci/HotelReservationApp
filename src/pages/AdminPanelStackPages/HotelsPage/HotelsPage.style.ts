@@ -55,7 +55,6 @@ export default StyleSheet.create({
     hotelCardHeaderText: {
         flexDirection: 'row',
         fontSize: 20,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     hotelCardBody: {
@@ -67,7 +66,6 @@ export default StyleSheet.create({
     },
     hotelCardBodyText: {
         fontSize: 16,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     hotelCardBodyButton:{

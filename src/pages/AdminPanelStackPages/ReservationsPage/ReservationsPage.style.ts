@@ -123,7 +123,6 @@ export default StyleSheet.create({
     },
     reservationCardBodyText: {
         fontSize: 16,
-        color: colors.primary,
         fontWeight: 'bold'
     },
     reservationCardBodyButton:{
